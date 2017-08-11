@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-echo "# electron_password_store" >> README.md
+echo "# electron_work_jornal" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
-git remote add origin https://github.com/eagle7410/electron_password_store.git
+git remote add origin git://github.com/eagle7410/electron-work-jornal.git
 git push -u origin master

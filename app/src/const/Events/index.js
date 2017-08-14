@@ -1,4 +1,4 @@
-import StorageCategory from './StorageCategory';
+import StorageProjects from './StorageProjects';
 import StorageFilters  from './StorageFilters';
 import StepsDownload from './StepsDownload';
 import StepsConnect from './StepsConnect'
@@ -15,7 +15,7 @@ import Users from './Users';
 import Sdf from './Sdf';
 
 export {
-	StorageCategory,
+	StorageProjects,
 	StorageFilters,
 	StepsDownload,
 	StepsConnect,

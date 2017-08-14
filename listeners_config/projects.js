@@ -63,7 +63,7 @@ module.exports = {
 				}
 			}
 		];
-		const main = Routes.cat;
+		const main = Routes.prj;
 		return config.map(conf => {
 			conf.route = conf.route || main;
 			return conf;

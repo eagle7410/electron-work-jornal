@@ -7,7 +7,7 @@ let model    = null;
  * @param {object} db
  */
 module.exports.init = db => {
-	model = db.collection('categories');
+	model = db.collection('projects');
 	module.exports.model = model;
 };
 

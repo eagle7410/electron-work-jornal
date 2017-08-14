@@ -1,4 +1,4 @@
-const cat = 'category';
+const cat = 'project';
 const CategoryError = {
 	move     : `Error delete ${cat}`,
 	update   : `No update ${cat}`,

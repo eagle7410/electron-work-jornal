@@ -4,8 +4,8 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
-import StorageCategoriesList from './StorageCategoriesList'
-import {StorageFilters, Storage} from '../../const/Events'
+import StorageProjectsList from '../share/StorageProjectsList'
+import {StorageFilters, Storage} from '../../../const/Events'
 
 const StoreTools = (state) => {
 	let filters = state.filters;
@@ -41,7 +41,7 @@ const StoreTools = (state) => {
 				}
 				<ToolbarSeparator />
 
-				<StorageCategoriesList onEdit={state.changeCategory} showAll={true} val={filters.categorySelect} />
+				<StorageProjectsList onEdit={state.changeCategory} showAll={true} val={filters.categorySelect} />
 				<ToolbarSeparator />
 				&nbsp;Count in page&nbsp;<TextField onChange={changeCountInPage} value={state.pagination.split} id='inputPagi' hintText='Enter count record in page' />
 			</ToolbarGroup>

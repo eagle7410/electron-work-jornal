@@ -22,17 +22,14 @@ module.exports.model = null;
  * @return {{Promise}}
  */
 const isValid = (data, action = 'create') => new Promise((ok, bad) => {
-	if (!data.category) {
-		return bad(libErr.valid('Record must have category'));
-	}
 
-	if (!data.title && !data.login) {
-		return bad(libErr.valid('Record must have title or login'));
+	if (!data.task && !data.date_doit) {
+		return bad(libErr.valid('Record must have task And date_doit'));
 	}
 
 	model.count({
-		title    : data.title,
-		login    : data.login
+		task    : data.task,
+		date_doit    : data.date_doit
 	}, (err, count) => {
 		if (err) {
 			return bad(err);
@@ -125,7 +122,7 @@ module.exports.addMany = data => new Promise((ok, bad) => {
 				if (!doc) {
 					return model.insert(rec, e => next(e));
 				}
-				
+
 				model.update({_id: doc._id}, rec, next);
 			});
 	}, err => err ? bad(err) : ok());

@@ -1,15 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import StorageCategoriesList from './StorageCategoriesList'
+import StorageCategoriesList from '../share/StorageProjectsList'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
+import DatePicker from 'material-ui/DatePicker';
 import ActionSave from 'material-ui/svg-icons/content/save';
-import AlertStatus from '../../const/AlertStatus';
-import {addRecord} from '../../api/Storage'
-import {RecordAdd, Alert} from '../../const/Events'
-import {CategoryError, Alert as AlertMessages} from '../../const/Messages'
-import {textField, getRecord} from '../../utils/GetRecord'
+import AlertStatus from '../../../const/AlertStatus';
+import {addRecord} from '../../../api/Storage'
+import {RecordAdd, Alert} from '../../../const/Events'
+import {CategoryError, Alert as AlertMessages} from '../../../const/Messages'
+import {textField, getRecord} from '../../../utils/GetRecord'
 
 const AddForm = (state) => {
 	let store = state.store;
@@ -17,12 +18,12 @@ const AddForm = (state) => {
 	const onSave = () => {
 		state.onSave();
 
-		if (!store.category) {
+		if (!store.project) {
 			return state.onCategoryError(CategoryError.noSelect);
 		}
 
-		if (!store.title && !store.login ) {
-			return state.showAlert(AlertMessages.empty, AlertStatus.BAD);
+		if (!store.task && !store.date_doit ) {
+			return state.showAlert('No number task or date doit', AlertStatus.BAD);
 		}
 
 		addRecord(getRecord(null, store))
@@ -31,17 +32,23 @@ const AddForm = (state) => {
 				state.clear();
 				state.showAlert(AlertMessages.save, AlertStatus.OK);
 			})
-			.catch(err => state.showAlert(AlertMessages.errorSave, AlertStatus.BAD));
+			.catch(err => {
+				state.showAlert(AlertMessages.errorSave, AlertStatus.BAD)
+			});
 	};
 
 	return (
 		<Paper >
 			<StorageCategoriesList
 				error={store.errorCategory}
-				onEdit={state.onEditCategory}
-				val={store.category}
-				label='Choice category'
+				onEdit={state.onEditProject}
+				val={store.project}
+				label='Choice project'
 			/><br/>
+			<DatePicker
+				hintText='Date doit'
+				onChange={(ev, date) => state.onEditText('date_doit', date)}
+				/><br/>
 			{
 				textField.map(
 					name => <div key={`warpAdd${name}`}>
@@ -53,12 +60,15 @@ const AddForm = (state) => {
 							</div>
 				)
 			}
-			<textarea placeholder='Enter descriptions' cols='30' rows='10'
+			<TextField
+      			hintText='Enter comment'
+      			multiLine={true}
 				onChange={state.onEditDesc}
-				value={store.desc}
-			/><br/>
+				value={store.comment}
+				onChange={ev => state.onEditText('comment', ev.target.value)}
+    		/><br />
 			<RaisedButton
-				label="Save"
+				label='Save'
 				primary={true}
 				style={{margin: '5px'}}
 				icon={<ActionSave />}
@@ -84,18 +94,11 @@ export default connect(
 		}),
 		onCategoryError: err => dispatch({type: RecordAdd.errCat, data: err}),
 		onSave: () => dispatch({type: RecordAdd.saved}),
-		onEditCategory: (event, index, value) => dispatch({
+		onEditProject: (event, index, value) => dispatch({
 			type: RecordAdd.change,
 			data: {
-				type: 'category',
+				type: 'project',
 				val: value
-			}
-		}),
-		onEditDesc: (event) => dispatch({
-			type: RecordAdd.change,
-			data: {
-				type: 'desc',
-				val: event.target.value
 			}
 		}),
 		onEditText: (type, val) => dispatch({

@@ -5,14 +5,14 @@ let Routes = null;
 let modelUsers      = null;
 let modelSettings   = null;
 let modelStorage    = null;
-let modelCategories = null;
+let modelProjects = null;
 
 module.exports = {
-	setModels: (user, storage, settings, categories) => {
+	setModels: (user, storage, settings, projects) => {
 		modelUsers      = user;
 		modelSettings   = settings;
 		modelStorage    = storage;
-		modelCategories = categories;
+		modelProjects   = projects;
 
 		return module.exports;
 	},
@@ -56,10 +56,10 @@ module.exports = {
 				modelUsers.list()
 					.then(list => {
 						data.users = list;
-						return modelCategories.list();
+						return modelProjects.list();
 					})
 					.then(list => {
-						data.categories = list;
+						data.projects = list;
 						return modelStorage.list();
 					})
 					.then(list => {

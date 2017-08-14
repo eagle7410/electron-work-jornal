@@ -4,7 +4,7 @@ import LoadAnimation from './LoadAnimation'
 import {fullData}  from '../../api/Loader'
 import AlertStatus from '../../const/AlertStatus'
 import {Redirect} from 'react-router-dom';
-import {StepsConnect, StorageCategory, Storage, Alert, DataLoader as DataLoaderEvent, Users} from '../../const/Events'
+import {StepsConnect, StorageProjects, Storage, Alert, DataLoader as DataLoaderEvent, Users} from '../../const/Events'
 import {Alert as AlertMess} from '../../const/Messages'
 
 class DataLoader extends Component {
@@ -13,8 +13,14 @@ class DataLoader extends Component {
 		super(props);
 
 		fullData().then(res => {
-			['Categories', 'Users', 'Storage', 'Settings'].forEach(
-				p => props[`init${p}`](res[p.toLowerCase()])
+			['Projects', 'Users', 'Storage', 'Settings'].forEach(
+				p => {
+					let call = props[`init${p}`];
+
+					if (!call) return false;
+
+					call(res[p.toLowerCase()])
+				}
 			);
 			props.isLoadOk();
 
@@ -42,7 +48,7 @@ export default connect(
 		initUsers      : data  => dispatch({type: Users.init , data: data}),
 		initStorage    : data  => dispatch({type: Storage.init , data: data}),
 		initSettings   : data  => dispatch({type: StepsConnect.init , data: data}),
-		initCategories : data  => dispatch({type: StorageCategory.init , data: data}),
+		initProjects   : data  => dispatch({type: StorageProjects.init , data: data}),
 		showAlert      : (mess, type) => dispatch({type : Alert.show, data: {
 			message : mess,
 			status  : type

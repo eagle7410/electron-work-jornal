@@ -18,6 +18,8 @@ const send = (url, data, method, headers) => new Promise((resolve) => {
 	ipcRenderer.send(action, data);
 
 	ipcRenderer.on(action + '-response', (event, data) => {
+		//TODO IGOR: clear 
+		console.log(action + '-response', data);
 		resolve(data);
 	})
 });

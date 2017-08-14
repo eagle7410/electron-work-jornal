@@ -3,7 +3,7 @@
  * @type {{cat: string, usr: string, sett: string, store: string}}
  */
 module.exports = {
-	cat   : 'categories',
+	prj   : 'projects',
 	usr   : 'users',
 	sett  : 'settings',
 	store : 'storage'

@@ -1,6 +1,6 @@
 import {save, move, update, reqFull} from '../utils/Req'
 import Routes from '../const/apiRoutes'
-const type = Routes.cat;
+const type = Routes.prj;
 
 const add  = name       => reqFull(save, type, name);
 const del  = id         => reqFull(move, type, id);

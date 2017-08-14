@@ -4,12 +4,10 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import SelectField from 'material-ui/SelectField';
 
-const StorageCategoriesList = (state) => {
+const StorageProjectsList = (state) => {
 	const categoriesList = state.store.list;
 	const menu = Object.keys(categoriesList).map(
-		inx => !~state.store.noChoice.indexOf(Number(inx)) ||  state.showAll
-			? <MenuItem value={Number(inx)} key={(state.keyPrev || 'catEdit') + inx } primaryText={categoriesList[inx]} />
-			: false
+		inx => <MenuItem value={Number(inx)} key={(state.keyPrev || 'catEdit') + inx } primaryText={categoriesList[inx]} />
 	);
 
 	return state.label
@@ -19,7 +17,6 @@ const StorageCategoriesList = (state) => {
 
 export default connect(
 	state => ({
-		store: state.storageCategories
+		store: state.storageProjects
 	})
-)(StorageCategoriesList);
-
+)(StorageProjectsList);

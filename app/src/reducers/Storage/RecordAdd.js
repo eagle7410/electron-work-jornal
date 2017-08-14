@@ -1,12 +1,12 @@
 import {RecordAdd} from '../../const/Events'
 
 const initialState = {
-	category      : false,
-	title         : '',
-	login         : '',
-	pass          : '',
-	desc          : '',
-	answer        : '',
+	project       : false,
+	date_doit     : null,
+	comment       : '',
+	task          : '',
+	hours         : '',
+	hours_fact    : '',
 	errorCategory : ''
 };
 
@@ -22,6 +22,7 @@ const recordAdd = (state = initialState, action) => {
 				...state,
 				errorCategory : action.data
 			};
+
 		case RecordAdd.saved:
 			return {
 				...state,

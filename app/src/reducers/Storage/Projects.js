@@ -1,4 +1,4 @@
-import {StorageCategory} from '../../const/Events'
+import {StorageProjects} from '../../const/Events'
 const initialState = {
 	list     : {},
 	noChoice : [2],
@@ -7,22 +7,24 @@ const initialState = {
 	addName  : ''
 };
 
-const storageCategories = (state = initialState, action) => {
+const storageProjects = (state = initialState, action) => {
 	let list;
 
 	// eslint-disable-next-line
 	switch (action.type) {
-		case StorageCategory.init:
+		case StorageProjects.init:
 			return {
 				...state,
 				list : action.data
 			};
-		case StorageCategory.createMode:
+
+		case StorageProjects.createMode:
 			return {
 				...state,
 				addName : action.data
 			};
-		case StorageCategory.create:
+
+		case StorageProjects.create:
 			list = Object.assign({}, state.list);
 			list[action.data.id] = action.data.name;
 
@@ -31,12 +33,14 @@ const storageCategories = (state = initialState, action) => {
 				list : list,
 				addName : ''
 			};
-		case StorageCategory.edit:
+
+		case StorageProjects.edit:
 			return {
 				...state,
 				editName : action.data
 			};
-		case StorageCategory.editSave:
+
+		case StorageProjects.editSave:
 			list = Object.assign({}, state.list);
 			list[String(state.onEdit)] = state.editName;
 			return {
@@ -45,19 +49,22 @@ const storageCategories = (state = initialState, action) => {
 				onEdit: false,
 				editName: ''
 			};
-		case StorageCategory.editMode:
+
+		case StorageProjects.editMode:
 			return {
 				...state,
 				onEdit: action.data,
 				editName : state.list[String(action.data)]
 			};
-		case StorageCategory.editCancel:
+
+		case StorageProjects.editCancel:
 			return {
 				...state,
 				onEdit: false,
 				editName: ''
 			};
-		case StorageCategory.move:
+
+		case StorageProjects.move:
 			list = Object.assign({}, state.list);
 			delete list[action.data];
 			return {
@@ -70,5 +77,4 @@ const storageCategories = (state = initialState, action) => {
 	return state;
 };
 
-export {storageCategories};
-
+export {storageProjects};

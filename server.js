@@ -17,7 +17,7 @@ const listenAuth       = require('./listeners_config/auth');
 const listenUsers      = require('./listeners_config/users');
 const listenCould      = require('./listeners_config/drop-box');
 const listenStorage    = require('./listeners_config/storage');
-const listenCategories = require('./listeners_config/categories');
+const listenProjects   = require('./listeners_config/projects');
 const send             = require('./libs/send');
 const Routes = require('./routes/RoutesConst');
 
@@ -37,7 +37,7 @@ const modelConstant   = require('./modelConst');
 const modelUsers      = models.get(db, modelConstant.usr);
 const modelSettings   = models.get(db, modelConstant.sett);
 const modelStorage    = models.get(db, modelConstant.store);
-const modelCategories = models.get(db, modelConstant.cat);
+const modelProjects   = models.get(db, modelConstant.prj);
 
 module.exports = {
 	run: (mainWindow) => new Promise(ok => {

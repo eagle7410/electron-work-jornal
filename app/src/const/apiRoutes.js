@@ -5,7 +5,7 @@ const download = `${dBox}-download-archive`;
 const Routes = {
 	appInit   : 'app-init',
 	auth      : 'auth',
-	cat       : 'category',
+	prj       : 'project',
 	usr       : 'user',
 	usrList   : 'users-list',
 	sdfPath   : 'sdf-path',

@@ -1,13 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { TableRowColumn, TableRow } from 'material-ui/Table';
-import ActionButtonDelete from '../tools/ActionButtonDelete'
-import ActionButtonEdit from '../tools/ActionButtonEdit'
-import {Storage, Confirm as ConfirmAction} from '../../const/Events'
-import {Confirm} from '../../const/Messages'
-import AlertStatus from '../../const/AlertStatus'
-import {del} from '../../api/Storage'
-import {styleDataLabel, styleRow, styleBlockInCell, styleArea} from '../../const/Styles'
+import TextField from 'material-ui/TextField';
+import ActionButtonDelete from '../../tools/ActionButtonDelete'
+import ActionButtonEdit from '../../tools/ActionButtonEdit'
+import {Storage, Confirm as ConfirmAction} from '../../../const/Events'
+import {Confirm} from '../../../const/Messages'
+import AlertStatus from '../../../const/AlertStatus'
+import {del} from '../../../api/Storage'
+import {styleDataLabel, styleRow, styleBlockInCell, styleArea} from '../../../const/Styles'
 
 const StorageRowShow = (state) => {
 	const row = state.row;
@@ -32,16 +33,20 @@ const StorageRowShow = (state) => {
 					</div>
 				</div>
 				<div style={styleBlockInCell}>
-					<span style={styleDataLabel}>Category :</span> {state.categories.list[row.category]} <br/>
-					<span style={styleDataLabel}>Title    :</span> {row.title} <br/>
-					<span style={styleDataLabel}>Login    :</span> {row.login} <br/>
-					<span style={styleDataLabel}>Pass     :</span> {row.pass} <br/>
-					<span style={styleDataLabel}>Answer   :</span> {row.answer}
+					<span style={styleDataLabel}>Project :</span> {state.projects.list[row.project]}&nbsp;
+					<span style={styleDataLabel}>Task    :</span> {row.task}&nbsp;
+					<span style={styleDataLabel}>Date doit    :</span> {row.date_doit.substring(0, 10)}&nbsp;
+					<span style={styleDataLabel}>Hours     :</span> {row.hours}&nbsp;
+					<span style={styleDataLabel}>Hours_fact  :</span> {row.hours_fact}&nbsp;
+					<TextField
+						hintText='Enter comment'
+						multiLine={true}
+						rows={1}
+						value={row.comment}
+					 />
 				</div>
 			 </TableRowColumn>
-			<TableRowColumn
-				children={<textarea  rows='4' style={styleArea} readOnly={true} defaultValue={row.desc}/>} onChange={state.onEditDesc}
-			/>
+
 		</TableRow>
 	);
 };
@@ -49,7 +54,7 @@ const StorageRowShow = (state) => {
 export default connect(
 	state => ({
 		store: state.storage,
-		categories : state.storageCategories
+		projects : state.storageProjects
 	}),
 	dispatch => ({
 		onEdit : id => dispatch({type : Storage.modeEdit, data : id}),

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Step, Stepper, StepLabel} from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {StepsDownload as Events,Alert, StorageCategory, Users, Storage} from '../../../const/Events'
+import {StepsDownload as Events,Alert, StorageProjects, Users, Storage} from '../../../const/Events'
 import {DropBox} from '../../../const/Messages'
 import AlertStatus from '../../../const/AlertStatus'
 import {styleBlock, styleButtonBlock} from '../../../const/Styles'
@@ -36,7 +36,7 @@ const StepsDownload = (state) => {
 			})
 			.then(fullData)
 			.then(res => new Promise(ok => {
-				['Categories', 'Users', 'Storage'].forEach(
+				['Projects', 'Users', 'Storage'].forEach(
 					p => state[`init${p}`](res[p.toLowerCase()])
 				);
 				state.next();
@@ -93,7 +93,7 @@ export default connect(
 		reset     : () => dispatch({type : Events.reset}),
 		initUsers      : data  => dispatch({type: Users.init , data: data}),
 		initStorage    : data  => dispatch({type: Storage.init , data: data}),
-		initCategories : data  => dispatch({type: StorageCategory.init , data: data}),
+		initCategories : data  => dispatch({type: StorageProjects.init , data: data}),
 		showAlert : (mess, type) => dispatch({
 			type : Alert.show,
 			data : {

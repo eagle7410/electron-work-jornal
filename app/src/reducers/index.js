@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 import {recordAdd} from './Storage/RecordAdd';
 import {storage} from './Storage/Storage';
 import {storageFilters} from './Storage/Filters';
-import {storageCategories} from './Storage/Categories';
+import {storageProjects} from './Storage/Projects';
 import {storagePagination} from './Storage/Pagination'
 import {dataConfirm} from './Confirm';
 import {users} from './Users/Users';
@@ -26,7 +26,7 @@ const reducer = combineReducers({
 	users,
 	storage,
 	storageFilters,
-	storageCategories,
+	storageProjects,
 	storagePagination,
 	alert,
 	dataConfirm,

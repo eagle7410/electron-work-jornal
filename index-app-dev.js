@@ -17,7 +17,7 @@ app.on('ready', () => {
 
 	let mainWindow = new BrowserWindow({
 		width  : 800,
-		height : 800,
+		height : 800
 	});
 
 	server.run(mainWindow)

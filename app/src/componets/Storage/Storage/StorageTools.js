@@ -6,9 +6,13 @@ import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import StorageProjectsList from '../share/StorageProjectsList'
 import {StorageFilters, Storage} from '../../../const/Events'
+import DropDownList from '../../tools/DropDownList'
 
+const stylePanagation = {maxWidth: '30px'};
 const StoreTools = (state) => {
 	let filters = state.filters;
+	let store = state.storage;
+
 	const changeCountInPage = (ev, val) => {
 		val = Number(val);
 
@@ -18,6 +22,31 @@ const StoreTools = (state) => {
 
 		state.changeCountInPage(val);
 	}
+
+	const changeFilter = (project, date) => {
+		let hours = 0;
+		let hoursFact = 0;
+		let rows = store.data.filter(row => {
+			if (row.project !== project || row.date_doit.substr(0, 10) !== date)
+				return false;
+
+			hours += Number(row.hours) || 0;
+			hoursFact += Number(row.hours_fact) || 0;
+
+			return true;
+		});
+
+		state.changeFiltes({
+			rows : rows,
+			hoursInDate       : hours,
+			hoursFactInDate   : hoursFact,
+			filterDate        : date,
+			categorySelect    : project
+		});
+	}
+
+	const changeProject = (event, index, value) => changeFilter(value, filters.filterDate);
+	const changeDate    = (event, index, value) => changeFilter(filters.categorySelect, value);
 
 	return (
 		<Toolbar>
@@ -40,10 +69,13 @@ const StoreTools = (state) => {
 						: <span/>
 				}
 				<ToolbarSeparator />
-
-				<StorageProjectsList onEdit={state.changeCategory} showAll={true} val={filters.categorySelect} />
+					<StorageProjectsList onEdit={changeProject} showAll={true} val={filters.categorySelect} />
 				<ToolbarSeparator />
-				&nbsp;Count in page&nbsp;<TextField onChange={changeCountInPage} value={state.pagination.split} id='inputPagi' hintText='Enter count record in page' />
+					<DropDownList onEdit={changeDate} val={filters.filterDate} list={state.storage.dates} />
+					&nbsp;hours: {filters.hoursInDate}&nbsp;hoursFact: {filters.hoursFactInDate}
+				<ToolbarSeparator />
+				&nbsp;Count in page&nbsp;
+				<TextField style={stylePanagation} onChange={changeCountInPage} value={state.pagination.split} id='inputPagi' hintText='Enter count record in page' />
 			</ToolbarGroup>
 		</Toolbar>
 	);
@@ -52,11 +84,12 @@ const StoreTools = (state) => {
 export default connect(
 	state => ({
 		filters : state.storageFilters,
-		pagination : state.storagePagination
+		pagination : state.storagePagination,
+		storage : state.storage
 	}),
 	dispatch => ({
+		changeFiltes      : data => dispatch({type : StorageFilters.chFilter, data : data}),
 		changeCountInPage : val => dispatch({type : Storage.changeCountInPage, data : val}),
-		changeCategory       : (event, index, value) => dispatch({type: StorageFilters.chCat, data: value}),
 		changeSearchText     : (ev, val) => dispatch({type: StorageFilters.chText, data: val.toLowerCase()}),
 		changeShowSearchText : ev => dispatch({type: StorageFilters.toggleText, data: ev.target.value})
 	})

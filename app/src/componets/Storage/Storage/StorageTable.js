@@ -4,7 +4,7 @@ import RowShow from './StorageRowShow';
 import RowEdit from './StorageRowEdit';
 import {Table, TableBody, TableHeader, TableFooter, TableRowColumn, TableHeaderColumn, TableRow} from 'material-ui/Table';
 import Pagination from 'material-ui-pagination';
-import {Storage} from '../../../const/Events'
+import {Storage, StorageFilters} from '../../../const/Events'
 import EmptyRow from '../../tools/EmptyRow'
 
 const StorageTable = (state) => {
@@ -12,8 +12,7 @@ const StorageTable = (state) => {
 	let filters = state.filters;
 	let pagination = state.pagination;
 	let filterCategory = filters.categorySelect;
-	let rows = store.data;
-
+	let rows = filters.rows;
 	let total = Math.ceil(rows.length / pagination.split);
 	let startIndex = (pagination.number - 1 ) * pagination.split;
 
@@ -67,6 +66,7 @@ export default connect(
 		pagination : state.storagePagination
 	}),
 	dispatch => ({
-		onChangePage : num => dispatch({type : Storage.changePage, data : num})
+		onChangePage : num => dispatch({type : Storage.changePage, data : num}),
+		onSetHours : data => dispatch({type : StorageFilters.setHours, data : data})
 	})
 )(StorageTable);

@@ -16,8 +16,7 @@ app.on('ready', () => {
 		.catch((err) => console.log('An error occurred: ', err));
 
 	let mainWindow = new BrowserWindow({
-		width  : 800,
-		height : 800
+		width  : 800
 	});
 
 	server.run(mainWindow)

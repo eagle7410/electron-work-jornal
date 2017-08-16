@@ -1,7 +1,7 @@
 import {Storage, StorageFilters} from '../../const/Events'
 
 const initialState = {
-	split   : 4,
+	split   : 8,
 	display : 5,
 	number  : 1
 };

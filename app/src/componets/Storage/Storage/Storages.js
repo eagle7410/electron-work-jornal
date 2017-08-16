@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 
 const Storages = (state) => (
 	<div>
-		<Paper zDepth={2}></Paper>
+		<Paper zDepth={2}><Tools/></Paper>
 		<Table/>
 	</div>
 )

@@ -46,6 +46,8 @@ const StepsDownload = (state) => {
 				state.next();
 			})
 			.catch(err => {
+				//TODO IGOR: clear
+				console.log('err', err);
 				state.stop();
 				state.showAlert(DropBox.badTryUpload, AlertStatus.BAD);
 			});
@@ -93,7 +95,7 @@ export default connect(
 		reset     : () => dispatch({type : Events.reset}),
 		initUsers      : data  => dispatch({type: Users.init , data: data}),
 		initStorage    : data  => dispatch({type: Storage.init , data: data}),
-		initCategories : data  => dispatch({type: StorageProjects.init , data: data}),
+		initProjects   : data  => dispatch({type: StorageProjects.init , data: data}),
 		showAlert : (mess, type) => dispatch({
 			type : Alert.show,
 			data : {

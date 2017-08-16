@@ -18,12 +18,12 @@ module.exports = {
 		mdSettings,
 		mdCategories
 	) => {
-		modelUsers = mdUsers;
-		modelStorage = mdStorage;
-		modelSettings = mdSettings;
-		modelCategories = mdCategories;
+			modelUsers = mdUsers;
+			modelStorage = mdStorage;
+			modelSettings = mdSettings;
+			modelCategories = mdCategories;
 
-		return module.exports;
+			return module.exports;
  	},
 	setRoutes: (routes) => {
 		Routes = routes;
@@ -57,6 +57,8 @@ module.exports = {
 			route: Routes.dropBoxDownloadArchiveClear,
 			handel: (res, action, dateStr) => {
 				let pathUpload = pathManager.getUploadPath(dateStr);
+				//TODO IGOR: clear
+				console.log('pathUpload', pathUpload);
 				pathManager.deleteFolderRecursive(pathUpload);
 				send.ok(res, action, dateStr);
 			}

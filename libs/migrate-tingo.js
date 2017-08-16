@@ -51,16 +51,16 @@ const mergeCollection = (db, name, modelSet, props) => new Promise((ok, bad) => 
 module.exports.up = (modelUsers, modelStorage, modelCategories, pathExtract) => new Promise((ok, bad) => {
 	const db = new Engine.Db(pathExtract, {});
 	const propsStore = [
-		'title',
-		'login',
-		'category',
-		'pass',
-		'desc',
-		'answer'
+		'project'   ,
+		'date_doit' ,
+		'comment'   ,
+		'task'      ,
+		'hours'     ,
+		'hours_fact'
 	];
 
 	mergeCollection(db, modelConst.store, modelStorage, propsStore)
-		.then(() => mergeCollection(db, modelConst.cat, modelCategories, ['name','_id']))
+		.then(() => mergeCollection(db, modelConst.prj, modelCategories, ['name','_id']))
 		.then(() => mergeCollection(db, modelConst.usr, modelUsers, ['login','pass','_id']))
 		.then(() => ok())
 		.catch(e => bad(e));

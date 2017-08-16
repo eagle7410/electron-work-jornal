@@ -1,6 +1,6 @@
 const fs   = require('fs-extra');
 const path = require('path');
-const fileName    = 'data.zip';
+const fileName    = 'data-task.zip';
 const pathArchive = path.join(__dirname, '..', 'archives');
 const pathUpload  = path.join(pathArchive, 'upload');
 

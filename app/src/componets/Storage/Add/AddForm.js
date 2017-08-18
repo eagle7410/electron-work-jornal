@@ -22,10 +22,9 @@ const AddForm = (state) => {
 			return state.onCategoryError(CategoryError.noSelect);
 		}
 
-		if (!store.task && !store.date_doit ) {
+		if (!store.task || !store.date_doit ) {
 			return state.showAlert('No number task or date doit', AlertStatus.BAD);
 		}
-
 		addRecord(getRecord(null, store))
 			.then(data => {
 				state.save(data);
@@ -63,7 +62,6 @@ const AddForm = (state) => {
 			<TextField
       			hintText='Enter comment'
       			multiLine={true}
-				onChange={state.onEditDesc}
 				value={store.comment}
 				onChange={ev => state.onEditText('comment', ev.target.value)}
     		/><br />

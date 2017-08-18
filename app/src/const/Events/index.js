@@ -12,7 +12,6 @@ import NavMenu from './NavMenu';
 import Login from './Login';
 import Alert from './Alert';
 import Users from './Users';
-import Sdf from './Sdf';
 
 export {
 	StorageProjects,
@@ -29,5 +28,4 @@ export {
 	Alert,
 	Login,
 	Users,
-	Sdf
 };

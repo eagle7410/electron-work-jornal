@@ -1,16 +1,16 @@
 const electron    = require('electron');
 const ipcRenderer = electron.ipcMain;
-const dialog      = electron.dialog;
 // Db
 const dbFolder = 'db';
+const Engine   = require('tingodb')();
+const dbPath   = `${__dirname}/${dbFolder}/tingo_db/data`;
+const db       = new Engine.Db(dbPath, {});
+const models   = require('./db/tingo_db/models');
+const Routes   = require('./routes/RoutesConstDev');
+
 //Paths
 const pathManager   = require('./libs/path-manager');
 pathManager.setDbFolder(dbFolder);
-const Engine   = require('tingodb')();
-const dbPath   = pathManager.getPathDb();
-const db       = new Engine.Db(dbPath, {});
-const models   = require('./db/tingo_db/models');
-
 // Messages
 const listenAuth       = require('./listeners_config/auth');
 const listenUsers      = require('./listeners_config/users');
@@ -18,10 +18,11 @@ const listenCould      = require('./listeners_config/drop-box');
 const listenStorage    = require('./listeners_config/storage');
 const listenProjects   = require('./listeners_config/projects');
 const send             = require('./libs/send');
-const Routes = require('./routes/RoutesConst');
 
 const listen = (action, handel) => {
-	ipcRenderer.on(action, (event, arg) => handel(event.sender, `${action}-response`, arg));
+	ipcRenderer.on(action, (event, arg) => {
+		handel(event.sender, `${action}-response`, arg);
+	});
 };
 
 const listeners = arConfig => {
@@ -41,10 +42,10 @@ const modelProjects   = models.get(db, modelConstant.prj);
 module.exports = {
 	run: (mainWindow) => new Promise(ok => {
 		listeners([
-			listenCould.setModels(modelUsers, modelStorage, modelSettings, modelCategories),
+			listenCould.setModels(modelUsers, modelStorage, modelSettings, modelProjects),
 			listenStorage.setModel(modelStorage),
-			listenAuth.setModels(modelUsers, modelStorage, modelSettings, modelCategories),
-			listenCategories.setModel(modelCategories),
+			listenAuth.setModels(modelUsers, modelStorage, modelSettings, modelProjects),
+			listenProjects.setModel(modelProjects),
 			listenUsers.setModel(modelUsers)
 		]);
 		ok();

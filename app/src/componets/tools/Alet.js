@@ -2,19 +2,24 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
-import SocialMood from 'material-ui/svg-icons/social/mood';
-import SocialMoodBad from 'material-ui/svg-icons/social/mood-bad';
+import SocialMood from 'material-ui/svg-icons/action/check-circle';
+import SocialMoodBad from 'material-ui/svg-icons/action/report-problem';
 import Paper from 'material-ui/Paper'
 import AlertStatus from '../../const/AlertStatus'
 import {Alert as Event} from '../../const/Events'
-import {icoBad,icoOk,paper} from './AlertStyles'
+import {icoBad,icoOk,paper, title, button} from './AlertStyles'
 
 const Alert = (state) => {
 	let alert = state.store;
 
 	return (
-		<Dialog actions={[<RaisedButton label="Is read" onTouchTap={state.onRead} primary={true}/>]} modal={false} open={alert.open}>
+		<Dialog
+			bodyStyle={{paddingBottom: '5px'}}
+			actions={[<RaisedButton label="Is read" style={button}
+            onTouchTap={state.onRead} primary={true}/>]} modal={false} open={alert.open}>
+			<b style={title}>Message</b>
 			<Paper style={paper}>
+
 				<table>
 					<tbody>
 						<tr>

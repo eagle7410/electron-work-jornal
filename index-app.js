@@ -5,9 +5,15 @@ const Menu          = electron.Menu;
 const server        = require('./server');
 
 app.on('ready', () => {
+	const screenElectron = electron.screen;
+	const mainScreen = screenElectron.getPrimaryDisplay();
+	const dimensions = mainScreen.size;
+
+	
+
 	let mainWindow = new BrowserWindow({
 		width  : 800,
-		height : 800,
+		height : dimensions.height
 	});
 
 	server.run(mainWindow)

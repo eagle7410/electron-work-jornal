@@ -1,6 +1,5 @@
 const electron    = require('electron');
 const ipcRenderer = electron.ipcMain;
-const dialog      = electron.dialog;
 // Db
 const dbFolder = 'db_test';
 const Engine   = require('tingodb')();
@@ -22,7 +21,6 @@ const send             = require('./libs/send');
 
 const listen = (action, handel) => {
 	ipcRenderer.on(action, (event, arg) => {
-		// TODO: clear
 		console.log(`:: ${action} `, arg);
 		handel(event.sender, `${action}-response`, arg);
 	});

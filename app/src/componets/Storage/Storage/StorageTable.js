@@ -11,7 +11,6 @@ const StorageTable = (state) => {
 	let store = state.store;
 	let filters = state.filters;
 	let pagination = state.pagination;
-	let filterCategory = filters.categorySelect;
 	let rows = filters.rows;
 	let total = Math.ceil(rows.length / pagination.split);
 	let startIndex = (pagination.number - 1 ) * pagination.split;
@@ -23,7 +22,7 @@ const StorageTable = (state) => {
 			<TableHeader displaySelectAll={false}>
 				<TableRow>
 					<TableHeaderColumn >Actions, Main data</TableHeaderColumn>
-					<TableHeaderColumn >Description</TableHeaderColumn>
+					<TableHeaderColumn >Comment</TableHeaderColumn>
 				</TableRow>
 			</TableHeader>
 			<TableBody displayRowCheckbox={false} showRowHover={true}>

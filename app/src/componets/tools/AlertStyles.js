@@ -5,6 +5,7 @@ const shareIcons = {
 const size = {
 	height : '40px',
 	width  : '40px',
+	padding: '5px'
 };
 const icoOk = {
 	...shareIcons,
@@ -19,9 +20,18 @@ const icoBad = {
 	...icoOk,
 	color : bad
 };
+const title = {
+	...shareIcons,
+};
+
+const button = {
+	marginRight : '15px'
+};
 
 export {
 	icoBad,
 	icoOk,
-	paper
+	paper,
+	title,
+	button
 };

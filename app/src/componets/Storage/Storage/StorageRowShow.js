@@ -8,7 +8,7 @@ import {Storage, Confirm as ConfirmAction} from '../../../const/Events'
 import {Confirm} from '../../../const/Messages'
 import AlertStatus from '../../../const/AlertStatus'
 import {del} from '../../../api/Storage'
-import {styleDataLabel, styleRow, styleBlockInCell, styleArea} from '../../../const/Styles'
+import {styleDataLabel, styleRow, styleBlockInCell} from '../../../const/Styles'
 
 const StorageRowShow = (state) => {
 	const row = state.row;

@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 

@@ -8,8 +8,6 @@ const Routes = {
 	prj       : 'project',
 	usr       : 'user',
 	usrList   : 'users-list',
-	sdfPath   : 'sdf-path',
-	sdfLoad   : 'sdf-load',
 	store     : 'storage',
 	dropBoxConLink  : `${connect}-link`,
 	dropBoxAccess   : `${connect}-access-token`,

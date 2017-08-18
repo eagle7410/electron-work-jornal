@@ -13,7 +13,6 @@ const Routes   = require('./routes/RoutesConstDev');
 const pathManager   = require('./libs/path-manager');
 pathManager.setDbFolder(dbFolder);
 // Messages
-const listenSdf        = require('./listeners_config/sdf');
 const listenAuth       = require('./listeners_config/auth');
 const listenUsers      = require('./listeners_config/users');
 const listenCould      = require('./listeners_config/drop-box');
@@ -48,7 +47,6 @@ module.exports = {
 		listeners([
 			listenCould.setModels(modelUsers, modelStorage, modelSettings, modelProjects),
 			listenStorage.setModel(modelStorage),
-			listenSdf.setDialog(dialog).setWindow(mainWindow).setModelStorage(modelStorage),
 			listenAuth.setModels(modelUsers, modelStorage, modelSettings, modelProjects),
 			listenProjects.setModel(modelProjects),
 			listenUsers.setModel(modelUsers)

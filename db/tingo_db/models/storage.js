@@ -108,13 +108,14 @@ module.exports.updateSafe = (data) => new Promise((ok, bad) => {
 module.exports.addMany = data => new Promise((ok, bad) => {
 	async.forEach(data, (rec, next) => {
 		model.findOne({
-				title    : rec.title,
-				login    : rec.login
+				project    : rec.project,
+				date_doit    : rec.date_doit,
+				task    : rec.task
 			}, (err, doc) => {
 				if (err) {
 					return next(err);
 				}
-
+			
 				if (rec._id) {
 					delete rec._id;
 				}

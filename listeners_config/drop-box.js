@@ -57,8 +57,7 @@ module.exports = {
 			route: Routes.dropBoxDownloadArchiveClear,
 			handel: (res, action, dateStr) => {
 				let pathUpload = pathManager.getUploadPath(dateStr);
-				//TODO IGOR: clear
-				console.log('pathUpload', pathUpload);
+
 				pathManager.deleteFolderRecursive(pathUpload);
 				send.ok(res, action, dateStr);
 			}

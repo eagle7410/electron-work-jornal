@@ -79,7 +79,7 @@ const checkFolderNewArchive = date => new Promise((ok, bad) => {
  * Delete path.
  * @param {string} dir
  */
-const deleteFolderRecursive = dir => fs.mkdirpSync(dir);
+const deleteFolderRecursive = dir => fs.removeSync(dir);
 
 module.exports = {
 	checkFolderNewArchive : checkFolderNewArchive,

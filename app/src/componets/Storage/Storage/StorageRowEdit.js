@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import ActionButtonSave from '../../tools/ActionButtonSave'
 import ActionButtonCancel from '../../tools/ActionButtonCancel'
 import { TableRowColumn, TableRow } from 'material-ui/Table';
-import StorageProjectsList from '../share/StorageProjectsList'
+import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
 import {Storage, Alert} from '../../../const/Events'
 import {edit} from '../../../api/Storage'
 import AlertStatus from '../../../const/AlertStatus'
-import {styleBlockInCell, styleRow, styleArea, styleCategoryEdit} from '../../../const/Styles'
+import {styleBlockInCell, styleRow, styleTextFieldEdit} from '../../../const/Styles'
 import {getRecord} from '../../../utils/GetRecord'
 
 const StorageRowEdit = (state) => {
@@ -32,36 +32,52 @@ const StorageRowEdit = (state) => {
 					</div>
 				</div>
 				<div style={styleBlockInCell}>
-					<span style={styleLabel}>Category :</span> <StorageProjectsList onEdit={state.onEditCategory} keyPrev={'catEdit' + id} val={row.category} style={styleCategoryEdit}/> <br/>
-					<span style={styleLabel}>Title    :</span> <TextField id={`edtT_${id}`} value={row.title} onChange={ev => state.onEditText('title', ev.target.value)}/> <br/>
-					<span style={styleLabel}>Login    :</span> <TextField id={`edtL_${id}`} value={row.login} onChange={ev => state.onEditText('login', ev.target.value)}/> <br/>
-					<span style={styleLabel}>Pass     :</span> <TextField id={`edtP_${id}`} value={row.pass} onChange={ev => state.onEditText('pass', ev.target.value)}/> <br/>
-					<span style={styleLabel}>Answer   :</span> <TextField id={`edtA_${id}`} value={row.answer} onChange={ev => state.onEditText('answer', ev.target.value)}/>
+					<span style={styleLabel}>Project :</span>{state.projects.list[row.project]}&nbsp;
+					<span style={styleLabel}>task :</span>
+						<TextField value={row.task} onChange={ev => state.onEditText('task', ev.target.value)} style = {styleTextFieldEdit} id={`edtP_${id}`} />
+					<br/>
+					<span style={styleLabel}>hours :</span>
+						<TextField value={row.hours} onChange={ev => state.onEditText('hours', ev.target.value)} style ={styleTextFieldEdit} id={`edtA_${id}`} />
+					&nbsp;
+					<span style={styleLabel}>hours_fact :</span>
+						<TextField onChange={ev => state.onEditText('hours_fact', ev.target.value)} style={styleTextFieldEdit} id={`edtA_${id}`} value={row.hours_fact}/>
+					<br/>
+					Date doit:
+					<DatePicker
+						style={styleTextFieldEdit}
+						defaultDate={new Date(row.date_doit)}
+						rows={4}
+						hintText='Date doit'
+						onChange={(ev, date) => state.onEditText('date_doit', date)}
+					/><br/>
+
+
 				</div>
 			 </TableRowColumn>
-			<TableRowColumn children={<textarea  style={styleArea} rows='10' defaultValue={row.desc} />} onChange={state.onEditDesc}/>
+			<TableRowColumn  >
+				<TextField
+					hintText='Enter comment'
+					multiLine={true}
+					value={row.comment}
+					onChange={state.onEditDesc}
+				/>
+			</TableRowColumn>
 		</TableRow>
 	);
 };
 
 export default connect(
 	state => ({
-		store: state.storage
+		store: state.storage,
+		projects : state.storageProjects
 	}),
 	dispatch => ({
 		onCancel   : () => dispatch({type : Storage.editClear}),
 		onSaveEdit : () => dispatch({type : Storage.saved}),
-		onEditCategory: (event, index, value) => dispatch({
-			type : Storage.edit,
-			data : {
-				type : 'category',
-				val  : value
-			}
-		}),
 		onEditDesc : ev => dispatch({
 			type : Storage.edit,
 			data : {
-				type : 'desc',
+				type : 'comment',
 				val  : ev.target.value
 			}
 		}),

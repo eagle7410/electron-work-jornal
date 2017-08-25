@@ -11,8 +11,7 @@ const fs        = require('fs-extra');
  * @return {{Promise}}
  */
 const createArchive = (folder, zipPath) => new Promise(
-	(ok, bad) => zipFolder(folder, zipPath, err => err ? bad(err) : ok())
-	);
+	(ok, bad) => zipFolder(folder, zipPath, err => err ? bad(err) : ok()));
 
 /**
  * Unzip folder.

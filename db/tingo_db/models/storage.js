@@ -51,6 +51,9 @@ const isValid = (data, action = 'create') => new Promise((ok, bad) => {
  * @return {{Promise}}
  */
 module.exports.save = data => new Promise((ok, bad) => {
+
+	data.date_doit = data.date_doit.substr(0, 10);
+
 	isValid(data)
 		.then(() => {
 			model.insert(data, (err, data) => {
@@ -84,6 +87,9 @@ module.exports.delete = id => new Promise((ok, bad) => {
  * @return {{Promise}}
  */
 module.exports.updateSafe = (data) => new Promise((ok, bad) => {
+
+	data.date_doit = data.date_doit.substr(0, 10);
+
 	isValid(data, 'update')
 		.then(() => {
 			let setData = Object.assign({}, data);

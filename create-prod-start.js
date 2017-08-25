@@ -8,7 +8,8 @@ const createServer = () => new Promise((ok, bad) => {
 		}
 
 		data = data.toString().replace(/\n(.*)console\.log\(\`\:\: \$\{action\}([^\n])+/, '')
-			.replace('db_test', 'db');
+			.replace('db_test', 'db')
+			.replace('RoutesConstDev', 'RoutesConst');
 
 		fs.writeFile('./server.js', data, err => {
 			if (err) {

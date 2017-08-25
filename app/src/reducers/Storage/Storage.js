@@ -88,6 +88,10 @@ const storage = (state = initialState, action) => {
 			editRowData = Object.assign({}, state.editRowData);
 			editRowData[action.data.type] = action.data.val;
 
+			if (typeof editRowData.date_doit === 'object' ) {
+				editRowData.date_doit = editRowData.date_doit.toISOString();
+			}
+
 			return {
 				...state,
 				editRowData: editRowData

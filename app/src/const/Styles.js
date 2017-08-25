@@ -45,6 +45,9 @@ const styleCategoryEdit = {
 const styleDiv = {
 	display : 'block'
 };
+const styleTextFieldEdit = {
+	width : 100
+};
 
 export {
 	tabUsers,
@@ -53,5 +56,6 @@ export {
 	styleBlock, styleButtonBlock,
 	styleContent,
 	styleCategoryEdit,
-	styleDiv
+	styleDiv,
+	styleTextFieldEdit
 }

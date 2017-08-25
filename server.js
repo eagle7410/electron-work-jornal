@@ -6,7 +6,7 @@ const Engine   = require('tingodb')();
 const dbPath   = `${__dirname}/${dbFolder}/tingo_db/data`;
 const db       = new Engine.Db(dbPath, {});
 const models   = require('./db/tingo_db/models');
-const Routes   = require('./routes/RoutesConstDev');
+const Routes   = require('./routes/RoutesConst');
 
 //Paths
 const pathManager   = require('./libs/path-manager');

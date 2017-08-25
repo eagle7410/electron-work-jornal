@@ -1,0 +1,12 @@
+{"k":"0000000078","o":"0000000121","v":"001"}
+{"_id":2,"_uid":2,"_dt":1503693537752,"_s":"e423dbc33d662e08c7602e1ee751ae3f"}
+{"project":2,"date_doit":"2017-08-21","comment":"","task":"154","hours":"8","hours_fact":"","_id":{"$wrap":"$oid","v":2}}
+{"k":"0000000078","o":"0000000139","v":"001"}
+{"_id":3,"_uid":3,"_dt":1503693537754,"_s":"6a98eb195eb2de7dd77fdf9086eafd28"}
+{"project":2,"date_doit":"2017-08-21","comment":"Include vue routes","task":"n1","hours":"7","hours_fact":"7","_id":{"$wrap":"$oid","v":3}}
+{"k":"0000000078","o":"0000000135","v":"001"}
+{"_id":4,"_uid":4,"_dt":1503693537754,"_s":"40695d89f49f8597c90a495b053ba6bb"}
+{"project":2,"date_doit":"2017-08-18","comment":"Inlude vue app","task":"n2","hours":"7","hours_fact":"7","_id":{"$wrap":"$oid","v":4}}
+{"k":"0000000078","o":"0000000152","v":"001"}
+{"_id":5,"_uid":5,"_dt":1503693537756,"_s":"56178f8c7c2a66a2c76aeb69020e6934"}
+{"project":2,"date_doit":"2017-08-22","comment":"Change place leaflet and adapters","task":"n2","hours":"","hours_fact":"","_id":{"$wrap":"$oid","v":5}}

@@ -9,6 +9,8 @@ const initialState = {
 	hoursInDate       : 0,
 	hoursFactInDate   : 0,
 	rows              : [],
+	dateFrom          : '',
+	dateTo            : '',
 	extToolsOpen      : false
 };
 

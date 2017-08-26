@@ -9,6 +9,7 @@ import ExtStyle from './StorageTools.css';
 import Paper from 'material-ui/Paper';
 import StorageToolsSettings from './StorageToolsSettings'
 import FilterDateMode from '../../../const/FilterDateMode'
+import {DateToString} from '../../../utils/Date'
 
 const stylePanagation = {maxWidth: '30px'};
 class StoreTools extends Component {
@@ -33,8 +34,19 @@ class StoreTools extends Component {
 
     changeFilter (project, date, mode, projectAll) {
         let filters = this.props.filters;
+        let from;
+        let to;
 
         mode = mode || filters.filterDateMode;
+
+        if (mode === FilterDateMode.useRange) {
+            from = DateToString(date.from);
+            to = DateToString(date.to);
+            date = filters.filterDate;
+        }
+
+        from = from || filters.dateFrom;
+        to = to || filters.dateTo;
 
         if (typeof projectAll !== 'boolean' )
     		projectAll = filters.projectAll;
@@ -44,10 +56,20 @@ class StoreTools extends Component {
         let hoursFact = 0;
         let rows = store.data.filter(row => {
 
-            if (mode !== FilterDateMode.noUse) {
-                if (mode === FilterDateMode.useDate && row.date_doit.substr(0, 10) !== date) {
-                    return false;
-                }
+            let date_doit = row.date_doit.substr(0, 10);
+
+            if (
+                mode !== FilterDateMode.noUse &&
+                (mode === FilterDateMode.useDate &&  date_doit !== date) ||
+                (
+                    mode === FilterDateMode.useRange &&
+                    (
+                        (from && date_doit < from) ||
+                        (to && date_doit > to)
+                    )
+                )
+            ) {
+                return false;
             }
 
             if (!projectAll && row.project !== project) {
@@ -67,7 +89,9 @@ class StoreTools extends Component {
             filterDate        : date,
             projectSelect    : project,
             projectAll : projectAll,
-            filterDateMode  : mode
+            filterDateMode  : mode,
+            dateFrom : from,
+            dateTo : to
         });
 	}
 

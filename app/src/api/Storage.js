@@ -1,25 +1,9 @@
 import {get, update, save , move, reqFull} from '../utils/Req'
 import Routes from '../const/apiRoutes'
+import {DateToString} from '../utils/Date'
 
 const formatData = data => {
-
-	if (typeof data.date_doit === 'object') {
-		let d = data.date_doit;
-		let m = d.getMonth() + 1;
-		let day = d.getDate();
-
-
-		if (m < 10) {
-			m = '0' + m;
-		}
-
-		if (day < 10) {
-			day = '0' + day;
-		}
-
-		data.date_doit = d.getFullYear()+'-'+m +'-' +day;
-
-	}
+    data.date_doit = DateToString(data.date_doit);
 
 	return data;
 };

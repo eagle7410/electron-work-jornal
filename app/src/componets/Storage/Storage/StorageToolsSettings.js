@@ -5,8 +5,8 @@ import Paper from 'material-ui/Paper';
 import Toggle from 'material-ui/Toggle';
 import StorageProjectsList from '../share/StorageProjectsList'
 import DropDownList from '../../tools/DropDownList'
+import DateRage from '../../tools/DateRange'
 import FilterDateMode from '../../../const/FilterDateMode'
-
 const LabelGroup = (state) => {
 	return <Paper style={styleGroupLabel}><b>{state.text}</b></Paper>;
 };
@@ -18,6 +18,7 @@ const StorageToolsSettings = (state) => {
     const changeDate    = (event, index, value) => state.onChange(filters.projectSelect, value);
     const changeDatesMode = (ev, val) => state.onChange(filters.projectSelect, filters.filterDate, val);
 	const changeProjectAll = (ev, val) => state.onChange(filters.projectSelect, filters.filterDate, null, !val);
+	const changeDateRange = (ev, from, to) => state.onChange(filters.projectSelect, {from : from, to : to});
 
     const contentDates = () => {
 		switch (filters.filterDateMode) {
@@ -27,6 +28,12 @@ const StorageToolsSettings = (state) => {
 					val={filters.filterDate}
 					list={state.storage.dates}
 				/>;
+			case FilterDateMode.useRange:
+				return <DateRage
+					from={filters.dateFrom}
+					to={filters.dateTo}
+					onChange={changeDateRange}
+					/>;
 			default :
 				return false;
 		}
@@ -77,8 +84,6 @@ const StorageToolsSettings = (state) => {
 					onToggle={changeProjectAll}
 				/>
 				{contentProject()}
-				<LabelGroup text="Search task"/>
-				<Toggle/>
 			</Paper>
 		</div>
 	);

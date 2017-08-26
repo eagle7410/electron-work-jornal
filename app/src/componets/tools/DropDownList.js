@@ -8,7 +8,12 @@ const DropDownList = (state) => {
 		(val, inx) => <MenuItem value={val} key={(state.keyPrev || 'dropDownList') + inx } primaryText={val} />
 	);
 
-	return <DropDownMenu style={state.style} value={state.val} onChange={state.onEdit} >{menu}</DropDownMenu>;
+	return <DropDownMenu
+		style={state.style}
+		value={state.val}
+		onChange={state.onEdit}
+		disabled={state.disable || false}
+	>{menu}</DropDownMenu>;
 }
 
 export default DropDownList;

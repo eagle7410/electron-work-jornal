@@ -1,107 +1,111 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import ActionSearch from 'material-ui/svg-icons/action/search';
-import StorageProjectsList from '../share/StorageProjectsList'
 import {StorageFilters, Storage} from '../../../const/Events'
-import DropDownList from '../../tools/DropDownList'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ExtStyle from './StorageTools.css';
 import Paper from 'material-ui/Paper';
 import StorageToolsSettings from './StorageToolsSettings'
+import FilterDateMode from '../../../const/FilterDateMode'
 
 const stylePanagation = {maxWidth: '30px'};
-const StoreTools = (state) => {
-	let filters = state.filters;
-	let store = state.storage;
+class StoreTools extends Component {
+    constructor (props) {
+        super(props);
 
-	const changeCountInPage = (ev, val) => {
-		val = Number(val);
+        let that = this;
+        let filters = that.props.filters;
 
-		if (isNaN(val) || val === 0) {
-			return;
-		}
+        that.changeFilter(filters.projectSelect, filters.filterDate);
+    }
 
-		state.changeCountInPage(val);
-	};
+    changeCountInPage (ev, val) {
+        val = Number(val);
 
-	const changeFilter = (project, date) => {
-		let hours = 0;
-		let hoursFact = 0;
-		let rows = store.data.filter(row => {
-			if (row.project !== project || row.date_doit.substr(0, 10) !== date)
-				return false;
+        if (isNaN(val) || val === 0) {
+            return;
+        }
 
-			hours += Number(row.hours) || 0;
-			hoursFact += Number(row.hours_fact) || 0;
+        this.props.state.changeCountInPage(val);
+	}
 
-			return true;
-		});
+    changeFilter (project, date, mode, projectAll) {
+        let filters = this.props.filters;
 
-		state.changeFiltes({
-			rows : rows,
-			hoursInDate       : hours,
-			hoursFactInDate   : hoursFact,
-			filterDate        : date,
-			categorySelect    : project
-		});
-	};
+        mode = mode || filters.filterDateMode;
 
-	const changeProject = (event, index, value) => changeFilter(value, filters.filterDate);
-	const changeDate    = (event, index, value) => changeFilter(filters.categorySelect, value);
+        if (typeof projectAll !== 'boolean' )
+    		projectAll = filters.projectAll;
 
-	return (
-		<div >
-			<Paper zDepth={2} style={{display: 'flex', width: '100%'}}>
+        let store = this.props.storage;
+        let hours = 0;
+        let hoursFact = 0;
+        let rows = store.data.filter(row => {
 
-				<Toolbar style={{zIndex: 4}}>
-					<ToolbarGroup >
-						<FloatingActionButton
-							className={filters.extToolsOpen ? 'tools-open' : ''}
-							style={ExtStyle.tools}
-							secondary={true}
-							mini={true}
-							onClick={state.toggleShowExtTools}
-						>
-							<ContentAdd />
-						</FloatingActionButton>
-						<ToolbarTitle text='Tools' />
+            if (mode !== FilterDateMode.noUse) {
+                if (mode === FilterDateMode.useDate && row.date_doit.substr(0, 10) !== date) {
+                    return false;
+                }
+            }
 
-						<IconButton
-							tooltip='Search'
-							touch={true}
-							tooltipPosition='bottom-right'
-						>
-							<ActionSearch
-								hoverColor={filters.searchIcoActive}
-								color={filters.searchIcoNow}
-								onTouchTap={state.changeShowSearchText}
-							/>
-						</IconButton>
-						{
-							filters.showSearchText
-								? <TextField id='inputSearch' hintText='Enter for search' onChange ={state.changeSearchText}/>
-								: <span/>
-						}
-						<ToolbarSeparator />
-						<StorageProjectsList onEdit={changeProject} showAll={true} val={filters.categorySelect} />
-						<ToolbarSeparator />
-						<DropDownList onEdit={changeDate} val={filters.filterDate} list={state.storage.dates} />
-						&nbsp;hours: {filters.hoursInDate}&nbsp;hoursFact: {filters.hoursFactInDate}
-						<ToolbarSeparator />
-						&nbsp;Count in page&nbsp;
-						<TextField style={stylePanagation} onChange={changeCountInPage} value={state.pagination.split} id='inputPagi' hintText='Enter count record in page' />
-					</ToolbarGroup>
-				</Toolbar>
-			</Paper >
-			<StorageToolsSettings />
-		</div>
+            if (!projectAll && row.project !== project) {
+                return false;
+            }
 
-	);
-};
+            hours += Number(row.hours) || 0;
+            hoursFact += Number(row.hours_fact) || 0;
+
+            return true;
+        });
+
+        this.props.changeFiltes({
+            rows : rows,
+            hoursInDate       : hours,
+            hoursFactInDate   : hoursFact,
+            filterDate        : date,
+            projectSelect    : project,
+            projectAll : projectAll,
+            filterDateMode  : mode
+        });
+	}
+
+	render () {
+    	let state = this.props;
+        let filters = this.props.filters;
+
+    	return (
+			<div >
+				<Paper zDepth={2} style={{display: 'flex', width: '100%'}}>
+					<Toolbar style={{zIndex: 4, width: '100%'}}>
+						<ToolbarGroup >
+							<FloatingActionButton
+								className={filters.extToolsOpen ? 'tools-open' : ''}
+								style={ExtStyle.tools}
+								secondary={true}
+								mini={true}
+								onClick={state.toggleShowExtTools}
+							>
+								<ContentAdd />
+							</FloatingActionButton>
+							<ToolbarSeparator />
+							<ToolbarTitle text='Tools' />
+
+							<ToolbarSeparator />
+
+							hours: {filters.hoursInDate}&nbsp;hoursFact: {filters.hoursFactInDate}
+							<ToolbarSeparator />
+							&nbsp;Count in page&nbsp;
+							<TextField style={stylePanagation} onChange={this.changeCountInPage.bind(this)} value={state.pagination.split} id='inputPagi' hintText='Enter count record in page' />
+						</ToolbarGroup>
+					</Toolbar>
+				</Paper >
+				<StorageToolsSettings onChange={this.changeFilter.bind(this)}/>
+			</div>
+        );
+	}
+}
 
 export default connect(
 	state => ({
@@ -112,8 +116,6 @@ export default connect(
 	dispatch => ({
 		changeFiltes      : data => dispatch({type : StorageFilters.chFilter, data : data}),
 		changeCountInPage : val => dispatch({type : Storage.changeCountInPage, data : val}),
-		changeSearchText     : (ev, val) => dispatch({type: StorageFilters.chText, data: val.toLowerCase()}),
-		changeShowSearchText : ev => dispatch({type: StorageFilters.toggleText, data: ev.target.value}),
 		toggleShowExtTools   : () => dispatch({type: StorageFilters.tgShowExteds}),
 	})
 )(StoreTools);

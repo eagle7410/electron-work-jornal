@@ -12,7 +12,9 @@ const StorageProjectsList = (state) => {
 
 	return state.label
 		? <SelectField errorText={state.error} floatingLabelText={state.label} value={state.val} onChange={state.onEdit} >{menu}</SelectField>
-		: <DropDownMenu style={state.style} value={state.val} onChange={state.onEdit} >{menu}</DropDownMenu>;
+		: <DropDownMenu style={state.style} value={state.val} onChange={state.onEdit}
+						disabled={state.disabled || false}
+		>{menu}</DropDownMenu>;
 };
 
 export default connect(

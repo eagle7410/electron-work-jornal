@@ -39,7 +39,10 @@ const clientInit = access_token => {
  *
  * @param  {function}     call
  */
-const checkConnect = call => client.account(status => call(status === 200));
+const checkConnect = call => client.account(status => {
+	console.log('status ', status);
+	return call(status === 200);
+});
 
 /**
  * Get request token for drop-box.
@@ -82,11 +85,11 @@ const getAccessToken = requestToken => new Promise((ok, bad) => {
  */
 const connectInit = data => new Promise((ok, bad) => {
 	const api = data.apiData;
-
+	console.log('data', data);
 	appInit(api.apiKey, api.apiSecret)
 		.clientInit(data.accessToken);
 
-	checkConnect(okey => okey ? ok() : bad());
+	checkConnect(okey => okey ? ok() : bad('Err in connectInit'));
 });
 
 /**

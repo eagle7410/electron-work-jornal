@@ -29,7 +29,7 @@ const storage = (state = initialState, action) => {
 			dates = [new Date().toISOString().slice(0, 10)];
 
 			if (action.data && action.data.length) {
-                action.data.map(rec => 	dates = addDate(dates, rec.date_doit) );
+                action.data.map(rec => 	dates = addDate(dates, rec.date_doit));
 			}
 
 			return {

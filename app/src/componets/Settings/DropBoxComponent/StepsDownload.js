@@ -46,8 +46,7 @@ const StepsDownload = (state) => {
 				state.next();
 			})
 			.catch(err => {
-				//TODO IGOR: clear
-				console.log('err', err);
+				console.log('err ', err);
 				state.stop();
 				state.showAlert(DropBox.badTryUpload, AlertStatus.BAD);
 			});

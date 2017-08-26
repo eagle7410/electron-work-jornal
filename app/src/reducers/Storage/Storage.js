@@ -28,7 +28,9 @@ const storage = (state = initialState, action) => {
 		case Storage.init:
 			dates = [new Date().toISOString().slice(0, 10)];
 
-			action.data.map(rec => 	dates = addDate(dates, rec.date_doit) )
+			if (action.data && action.data.length) {
+                action.data.map(rec => 	dates = addDate(dates, rec.date_doit) );
+			}
 
 			return {
 				...state,

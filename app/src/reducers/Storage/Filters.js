@@ -11,13 +11,20 @@ const initialState = {
 	filterDate        : new Date().toISOString().substr(0, 10),
 	hoursInDate       : 0,
 	hoursFactInDate   : 0,
-	rows              : []
+	rows              : [],
+	extToolsOpen      : false
 };
 
 const storageFilters = (state = initialState, action) => {
 
 	// eslint-disable-next-line
 	switch (action.type) {
+		case StorageFilters.tgShowExteds :
+			return {
+				...state,
+				extToolsOpen : !state.extToolsOpen
+			};
+
 		case StorageFilters.chFilter:
 			return {
 				...state,

@@ -6,6 +6,8 @@ import {Table, TableBody, TableHeader, TableFooter, TableRowColumn, TableHeaderC
 import Pagination from 'material-ui-pagination';
 import {Storage, StorageFilters} from '../../../const/Events'
 import EmptyRow from '../../tools/EmptyRow'
+import Paper from 'material-ui/Paper';
+
 
 const StorageTable = (state) => {
 	let store = state.store;
@@ -18,9 +20,10 @@ const StorageTable = (state) => {
 	rows = rows.slice(startIndex, startIndex + pagination.split);
 
 	return (
+		<Paper style={{zIndex : 1}}>
 		<Table fixedHeader={true} selectable={false}>
 			<TableHeader displaySelectAll={false}>
-				<TableRow>
+				<TableRow >
 					<TableHeaderColumn >Actions, Main data</TableHeaderColumn>
 					<TableHeaderColumn >Comment</TableHeaderColumn>
 				</TableRow>
@@ -55,6 +58,7 @@ const StorageTable = (state) => {
 			}
 
 		</Table>
+		</Paper>
 	);
 };
 

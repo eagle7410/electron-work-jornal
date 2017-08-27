@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const correctRoutes = () => new Promise((ok, bad) => {
-	const path = './app/src/const/Routes.js';
+	const path = '../app/src/const/Routes.js';
 	fs.readFile(path, 'utf8', (err,data) => {
 		if (err) {
 			console.log(err);
@@ -26,7 +26,7 @@ const correctRoutes = () => new Promise((ok, bad) => {
 });
 
 const setRoutesToProd = () => new Promise((ok, bad) => {
-	const path = './app/src/const/apiRoutes.js';
+	const path = '../app/src/const/apiRoutes.js';
 	fs.readFile(path, 'utf8', (err,data) => {
 		if (err) {
 			console.log(err);
@@ -36,7 +36,7 @@ const setRoutesToProd = () => new Promise((ok, bad) => {
 		data = data.toString();
 
 
-		fs.writeFile('./routes/RoutesConst.js', data, err => {
+		fs.writeFile('../routes/RoutesConst.js', data, err => {
 			if (err) {
 				console.log('setRoutesToPropd err', err);
 				return bad();
@@ -50,7 +50,7 @@ const setRoutesToProd = () => new Promise((ok, bad) => {
 });
 
 const correctPackageJson = () => new Promise((ok, bad) => {
-	const path = './package.json';
+	const path = '../package.json';
 	fs.readFile(path, 'utf8', (err,data) => {
 		if (err) {
 			console.log(err);
@@ -76,7 +76,7 @@ const correctPackageJson = () => new Promise((ok, bad) => {
 const rebuildStatic = () => new Promise((ok, bad) => {
 	const cmd = require('node-cmd');
 	const path = require('path');
-	let prjPath = path.resolve();
+	let prjPath = path.resolve('..');
 
 	prjPath = prjPath.replace(/\s/g,'\\ ');
 

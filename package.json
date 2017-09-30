@@ -32,14 +32,14 @@
     "electron-devtools-installer": "^2.2.0",
     "electron-packager": "^8.7.2",
     "electron-prebuilt": "^1.4.13",
-    "electron-prebuilt-compile": "^1.7.5",
+    "electron-prebuilt-compile": "^1.8.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.1.7",
     "gulp-uglifyjs": "^0.6.2",
     "node-cmd": "3.0.0",
     "path": "^0.12.7",
-    "xml2js": "^0.4.17"
+    "xml2js": "^0.4.19"
   },
   "homepage": "https://github.com/eagle7410/electron_password_store#readme",
   "dependencies": {

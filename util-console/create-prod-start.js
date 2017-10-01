@@ -1,7 +1,7 @@
 const fs = require('fs');
-
+const root = `${__dirname}/../`;
 const createServer = () => new Promise((ok, bad) => {
-	fs.readFile('../server-dev.js', 'utf8', (err,data) => {
+	fs.readFile(root +'server-dev.js', 'utf8', (err,data) => {
 		if (err) {
 			console.log(err);
 			return bad();
@@ -11,7 +11,7 @@ const createServer = () => new Promise((ok, bad) => {
 			.replace('db_test', 'db')
 			.replace('RoutesConstDev', 'RoutesConst');
 
-		fs.writeFile('../server.js', data, err => {
+		fs.writeFile(root +'server.js', data, err => {
 			if (err) {
 				console.log('Server not save ', err);
 				return bad();
@@ -25,7 +25,7 @@ const createServer = () => new Promise((ok, bad) => {
 });
 
 const createIndex = () => new Promise((ok, bad) => {
-	fs.readFile('../index-app-dev.js', 'utf8', (err,data) => {
+	fs.readFile(root + 'index-app-dev.js', 'utf8', (err,data) => {
 		if (err) {
 			console.log(err);
 			return bad();
@@ -47,7 +47,7 @@ const createIndex = () => new Promise((ok, bad) => {
 				'\t\t\tmainWindow.loadURL(\'http://localhost:3000/\');', 'mainWindow.loadURL(`file://${__dirname}/html/index.html`);')
 			.replace('./server-dev', './server');
 
-		fs.writeFile('../index-app.js', data, err => {
+		fs.writeFile(root + 'index-app.js', data, err => {
 			if (err) {
 				console.log('Index not save ', err);
 				return bad();

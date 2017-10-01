@@ -1,7 +1,7 @@
 const assert = require('assert');
-const couldFactory = require('../libs/coulds/CouldFactory');
+const cloudFactory = require('../libs/clouds/CloudFactory');
 const pathManager = require('../libs/path-manager');
-const drive = couldFactory.getCould(couldFactory.types().google);
+const drive = cloudFactory.getCloud(cloudFactory.types().google);
 
 describe('Check Google.Drive', () => {
 	it('Check Google.Drive fail connect', function() {

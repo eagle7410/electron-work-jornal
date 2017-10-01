@@ -12,7 +12,6 @@ import {navMenu} from './NavMenu';
 import {alert} from './Alert'
 import {dataLoader} from './DataLoader'
 import {dropBoxSettingsForm} from './Settings/DropBoxSettingsForm'
-import {dropBoxConnectSteps} from './Settings/DropBoxConnectSteps'
 import {dropBoxStepsUpload} from './Settings/DropBoxStepsUpload'
 import {dropBoxStepsDownload} from './Settings/DropBoxStepsDownload'
 
@@ -31,7 +30,6 @@ const reducer = combineReducers({
 	dataLoader,
 	navMenu,
 	dropBoxSettingsForm,
-	dropBoxConnectSteps,
 	dropBoxStepsUpload,
 	dropBoxStepsDownload
 });

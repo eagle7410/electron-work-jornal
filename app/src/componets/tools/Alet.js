@@ -25,7 +25,7 @@ const Alert = (state) => {
 						<tr>
 							<td>
 							{
-								alert._status === AlertStatus.OK
+								alert.status === AlertStatus.OK
 									? <SocialMood    style={icoOk}  />
 									: <SocialMoodBad style={icoBad} />
 							}

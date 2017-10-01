@@ -2,6 +2,8 @@ import {
 	panelUsers,
 	panelSettings,
 	rowStoreLabel,
+	ok,
+	bad
 } from './Colors'
 
 const tabUsers = {
@@ -49,6 +51,20 @@ const styleTextFieldEdit = {
 	width : 100
 };
 
+const styleIcon = {
+	marginLeft:10
+};
+
+const styleIconEnable = {
+	... styleIcon,
+	color : ok
+};
+
+const styleIconDisable = {
+	... styleIcon,
+	color : bad
+};
+
 export {
 	tabUsers,
 	tabSettings,
@@ -57,5 +73,7 @@ export {
 	styleContent,
 	styleCategoryEdit,
 	styleDiv,
-	styleTextFieldEdit
+	styleTextFieldEdit,
+	styleIconEnable,
+	styleIconDisable
 }

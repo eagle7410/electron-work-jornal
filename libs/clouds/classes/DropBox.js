@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Interface = require('./CouldInterface');
+const Interface = require('./CloudInterface');
 const pathManager = require('../../path-manager');
 
 module.exports = class CouldDropBox extends Interface {
@@ -10,7 +10,7 @@ module.exports = class CouldDropBox extends Interface {
 		const that = this;
 
 		that.dbox = require('dropbox');
-		that.accessTokenFile = 'drop_box_access.json';
+		that.cloudFileName = 'drop_box_access.json';
 
 	}
 
@@ -18,7 +18,7 @@ module.exports = class CouldDropBox extends Interface {
 		const that = this;
 
 		return new Promise((ok, bad) => {
-			const accessJson = pathManager.getPathToFile(that.pathToAccessToken, that.accessTokenFile);
+			const accessJson = pathManager.getPathToFile(that.pathToAccessToken, that.cloudFileName);
 
 			if (!pathManager.checkExistSync(accessJson)) {
 				that._status = that._statuses.noAccessToken;
@@ -97,5 +97,9 @@ module.exports = class CouldDropBox extends Interface {
 				.then(ok)
 				.catch(bad);
 		});
+	}
+
+	isHaveConfig () {
+		return pathManager.checkExistSync(pathManager.getPathToFile(this.pathToAccessToken, this.cloudFileName));
 	}
 }

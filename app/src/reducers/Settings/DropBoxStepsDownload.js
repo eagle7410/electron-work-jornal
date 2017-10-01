@@ -9,6 +9,10 @@ const initialState = {
 
 const dropBoxStepsDownload  = (state = initialState, action) => {
 
+	if (action.data !== 'dbox') {
+		return state;
+	}
+
 	// eslint-disable-next-line
 	switch (action.type) {
 		case StepsDownload.reset:
@@ -17,6 +21,7 @@ const dropBoxStepsDownload  = (state = initialState, action) => {
 			};
 
 		case StepsDownload.stop:
+
 			return {
 				...state,
 				finished : true,

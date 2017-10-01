@@ -1,4 +1,4 @@
-const prefix = 'DropBoxConnectSteps';
+const prefix = 'Setting';
 
 const StepsConnect = {
 	init        : `${prefix}Init`,

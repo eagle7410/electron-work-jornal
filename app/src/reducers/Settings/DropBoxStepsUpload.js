@@ -9,6 +9,10 @@ const initialState = {
 
 const dropBoxStepsUpload  = (state = initialState, action) => {
 
+	if (action.data !== 'dbox') {
+		return state;
+	}
+
 	// eslint-disable-next-line
 	switch (action.type) {
 		case StepsUpload.reset:

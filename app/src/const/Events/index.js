@@ -2,7 +2,7 @@ import StorageProjects from './StorageProjects';
 import StorageFilters  from './StorageFilters';
 import StepsDownload from './StepsDownload';
 import StepsConnect from './StepsConnect'
-import DropBoxForm from './DropBoxForm';
+import DropBoxConnect from './DropBoxConnect';
 import StepsUpload from './StepsUpload';
 import DataLoader from './DataLoader';
 import RecordAdd  from './RecordAdd';
@@ -14,11 +14,11 @@ import Alert from './Alert';
 import Users from './Users';
 
 export {
+	DropBoxConnect,
 	StorageProjects,
 	StorageFilters,
 	StepsDownload,
 	StepsConnect,
-	DropBoxForm,
 	StepsUpload,
 	DataLoader,
 	RecordAdd,

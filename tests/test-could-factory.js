@@ -1,12 +1,12 @@
 const assert = require('assert');
-const couldFactory = require('../libs/coulds/CouldFactory');
-const DropBox = require('../libs/coulds/classes/DropBox');
-const GoogleDrive = require('../libs/coulds/classes/GoogleDrive');
+const cloudFactory = require('../libs/clouds/CloudFactory');
+const DropBox = require('../libs/clouds/classes/DropBox');
+const GoogleDrive = require('../libs/clouds/classes/GoogleDrive');
 
 describe('Could factory', () => {
 	it('Check get Bad', () => new Promise(ok => {
 		try {
-			couldFactory.getCould('fail');
+			cloudFactory.getCloud('fail');
 			assert.ok(false);
 		} catch (e) {
 			assert.ok(e.message === 'Could not extends Could Interface.');
@@ -16,14 +16,14 @@ describe('Could factory', () => {
 	}));
 
 	it('Check get DropBox', () => new Promise(ok => {
-		let could = couldFactory.getCould(couldFactory.types().dBox);
+		let cloud = cloudFactory.getCloud(cloudFactory.types().dBox);
 
-		assert.ok(could instanceof DropBox);
+		assert.ok(cloud instanceof DropBox);
 		ok();
 	}));
 
 	it('Check get GoogleDrive', () => new Promise(ok => {
-		let could = couldFactory.getCould(couldFactory.types().google);
+		let could = cloudFactory.getCloud(cloudFactory.types().google);
 
 		assert.ok(could instanceof GoogleDrive);
 		ok();

@@ -11,15 +11,15 @@ const Routes = {
 	store     : 'storage',
 	dropBoxConLink  : `${connect}-link`,
 	dropBoxAccess   : `${connect}-access-token`,
-	dropBoxConInit  : `${connect}-init`,
+	cloudInit  : `${connect}-init`,
 	dropBoxConCheck : `${connect}-check`,
 	dropBoxSetToken : `${connect}-token`,
-	dropBoxUpload        : upload,
-	dropBoxUploadArchive : `${upload}-create-archive`,
-	dropBoxDownloadArchive : download,
-	dropBoxDownloadArchiveExtract : `${download}-extract`,
-	dropBoxDownloadArchiveMerge   : `${download}-merge`,
-	dropBoxDownloadArchiveClear   : `${download}-clear`
+	cloudUpload        : upload,
+	cloudUploadArchive : `${upload}-create-archive`,
+	cloudDownloadArchive : download,
+	cloudDownloadArchiveExtract : `${download}-extract`,
+	cloudDownloadArchiveMerge   : `${download}-merge`,
+	cloudDownloadArchiveClear   : `${download}-clear`
 };
 
 module.exports = Routes;

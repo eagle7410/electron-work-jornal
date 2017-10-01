@@ -13,8 +13,8 @@ module.exports = class CouldInterface {
 		};
 
 		that._status = this._statuses.create;
-		that.pathToAccessToken = null;
-		that.couldFileName = null;
+		that.pathToAccessToken = pathManager.getPathDropBoxData();
+		that.cloudFileName = null;
 	}
 
 	/**
@@ -36,6 +36,13 @@ module.exports = class CouldInterface {
 	 */
 	moveFromCould (folder, fileName)  {}
 
+	/**
+	 *
+	 * @returns {boolean}
+	 */
+	isHaveConfig () {
+		return false;
+	}
 	/**
 	 *
 	 * @param fileName {string}
@@ -71,8 +78,12 @@ module.exports = class CouldInterface {
 	 *
 	 * @param fileName {string}
 	 */
-	setCouldFileName(fileName) {
-		this.couldFileName = fileName;
+	setCloudFileName(fileName) {
+		this.cloudFileName = fileName;
+	}
+
+	getConfigPath () {
+		return pathManager.getPathToFile(this.pathToAccessToken, this.cloudFileName);
 	}
 
 }

@@ -1,9 +1,9 @@
-let Interface = require('./classes/CouldInterface');
+let Interface = require('./classes/CloudInterface');
 let DropBox = require('./classes/DropBox');
 let GoogleDrive = require('./classes/GoogleDrive');
 
 class CouldFactory {
-	getCould (type) {
+	getCloud (type) {
 		let instance;
 		const types = this.types();
 

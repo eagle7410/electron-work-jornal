@@ -1,7 +1,5 @@
 const fs = require('fs');
-// TODO: Back clear
-const request = require('request');
-const Interface = require('./CouldInterface');
+const Interface = require('./CloudInterface');
 const pathManager = require('../../path-manager');
 
 module.exports = class GoogleDrive extends Interface {
@@ -13,7 +11,7 @@ module.exports = class GoogleDrive extends Interface {
 
 		that.googleApi = require('googleapis');
 		that.googleAuth = require('google-auth-library');
-		that.accessTokenFile = 'google_access_token.json';
+		that.cloudFileName = 'google_access_token.json';
 		that._rootId = null;
 		that._rootFolderName = 'AppsStore';
 
@@ -74,7 +72,7 @@ module.exports = class GoogleDrive extends Interface {
 		const that = this;
 
 		return new Promise((ok, bad) => {
-			const authJson = pathManager.getPathToFile(that.pathToAccessToken, that.accessTokenFile);
+			const authJson = pathManager.getPathToFile(that.pathToAccessToken, that.cloudFileName);
 
 			if (!pathManager.checkExistSync(authJson)) {
 				that._status = that._statuses.noAccessToken;
@@ -228,5 +226,9 @@ module.exports = class GoogleDrive extends Interface {
 				})
 				.catch(bad);
 		});
+	}
+
+	isHaveConfig () {
+		return pathManager.checkExistSync(pathManager.getPathToFile(this.pathToAccessToken, this.cloudFileName));
 	}
 }

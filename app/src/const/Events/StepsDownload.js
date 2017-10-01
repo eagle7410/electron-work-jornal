@@ -1,4 +1,4 @@
-const prefix = 'DropBoxDownloadSteps';
+const prefix = 'CloudDownloadSteps';
 
 const StepsDownload = {
 	run   : `${prefix}Run`,

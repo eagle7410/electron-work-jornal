@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {StepsUpload as Events, Alert} from '../../../const/Events'
 import {DropBox} from '../../../const/Messages'
 import AlertStatus from '../../../const/AlertStatus'
-import {postArchive, putDropBoxArchive} from '../../../api/DropBox'
+import {postArchive, putCloudArchive} from '../../../api/Cloud'
 import StepsSimpleContent from './StepsSimpleContent'
 
 const styleBlock       = {width: '100%', maxWidth: 700, margin: 'auto'};
@@ -14,20 +14,20 @@ const styleButtonBlock = {marginTop: 24, marginBottom: 12};
 const StepsUpload = (state) => {
 	const store    = state.store;
 	const connect  = state.connect ;
+	const typeData = state.type;
 	const finished  = store.finished;
 	const stepIndex = store.stepIndex;
 	const loading   = store.loading;
-
 	const handelRun = () => {
-		state.run();
+		state.run(typeData);
 		postArchive()
 			.then(date => {
-				state.next();
-				return putDropBoxArchive(date);
+				state.next(typeData);
+				return putCloudArchive({...typeData, date : date});
 			})
-			.then(state.next)
+			.then(() => state.next(typeData))
 			.catch(err => {
-				state.stop();
+				state.stop(typeData);
 				console.log('Error create archive', err);
 				state.showAlert(DropBox.badTryUpload, AlertStatus.BAD)
 			});
@@ -48,7 +48,7 @@ const StepsUpload = (state) => {
 					label={'Restart'}
 					disabled={!finished}
 					secondary={true}
-					onTouchTap={state.reset}
+					onTouchTap={() => state.reset(typeData)}
 				/>
 				<StepsSimpleContent finished={finished} loading={loading} stop={store.stop}/>
 			</div>
@@ -67,10 +67,10 @@ export default connect(
 		connect : state.dropBoxSettingsForm
 	}),
 	dispatch => ({
-		run       : () => dispatch({type : Events.run}),
-		stop      : () => dispatch({type : Events.stop}),
-		next      : () => dispatch({type : Events.next}),
-		reset     : () => dispatch({type : Events.reset}),
+		run       : (typeData) => dispatch({type : Events.run,    data: typeData.type}),
+		stop      : (typeData) => dispatch({type : Events.stop,   data: typeData.type}),
+		next      : (typeData) => dispatch({type : Events.next,   data: typeData.type}),
+		reset     : (typeData) => dispatch({type : Events.reset,  data: typeData.type}),
 		showAlert : (mess, type) => dispatch({
 			type: Alert.show, data: {
 				message: mess,

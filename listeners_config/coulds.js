@@ -1,3 +1,5 @@
+// TODO: Back clear
+const fs           = require('fs-extra');
 const could        = require('../libs/drop-box');
 const send         = require('../libs/send');
 const zipper       = require('../libs/zipper');
@@ -6,25 +8,62 @@ const migrateTingo = require('../libs/migrate-tingo');
 
 const reqTypes = send.reqTypes;
 let Routes = null;
-let modelUsers = null;
-let modelStorage = null;
+let cloudDbox   = null;
+let cloudGoogle = null;
+let modelUsers    = null;
+let modelStorage  = null;
 let modelSettings = null;
-let modelCategories = null;
+let modelProjects = null;
+let dialog       = null;
+let mainWindow   = null;
+
+/**
+ *
+ * @param data {{type:string}}
+ * @returns {*}
+ */
+const getCloudByType = (data) => {
+	switch (data.type) {
+		case 'dbox' :
+			return cloudDbox;
+
+		case 'google' :
+			return cloudGoogle;
+	}
+
+	console.log('ERR: Bad cloud type ' + data.type);
+
+	return null;
+
+};
 
 module.exports = {
-	setModels : (
-		mdUsers,
-		mdStorage,
-		mdSettings,
-		mdCategories
-	) => {
-			modelUsers = mdUsers;
-			modelStorage = mdStorage;
-			modelSettings = mdSettings;
-			modelCategories = mdCategories;
+	/**
+	 *
+	 * @param models {{users : {},setting : {},store : {},projects : {}}}
+	 */
+	setModels : (models) => {
+			modelUsers = models.users;
+			modelStorage = models.store;
+			modelSettings = models.setting;
+			modelProjects = models.projects;
 
 			return module.exports;
  	},
+	setWindow: win => {
+		mainWindow = win;
+		return module.exports;
+	},
+	setDialog: dialogComponent => {
+		dialog = dialogComponent;
+		return module.exports;
+	},
+	setClouds : (coulds) => {
+		cloudDbox = coulds.dbox;
+		cloudGoogle = coulds.google;
+
+		return module.exports;
+	},
 	setRoutes: (routes) => {
 		Routes = routes;
 
@@ -32,29 +71,44 @@ module.exports = {
 	},
 	config : () => [
 		{
-			type : reqTypes.post,
-			route: Routes.dropBoxSetToken,
+			route: Routes.cloudInit,
 			handel: (res, action, data) => {
-				const apiData = {
-					apiKey : data.apiKey,
-					apiSecret : data.apiSecret
-				};
-				const token = {
-					oauth_token_secret : data.oauth_token_secret,
-					oauth_token : data.oauth_token,
-					uid : data.uid
-				};
-
-				modelSettings.setApiData(apiData)
-					.then(() => modelSettings.setAccessToken(token))
-					.then(() => send.ok(res, action))
-					.catch(err => send.err(res, action))
-
+				getCloudByType(data).connectInit()
+					.then(() => {
+						send.ok(res, action, null)
+					})
+					.catch(err => {
+						console.log('!ERR init dropBox connect', err);
+						send.err(res, action, 'Error get dropBox connect');
+					});
 			}
 		},
 		{
+			route: Routes.cloudGetPath,
+			handel: (res, action, data) => {
+				let folder = dialog.showOpenDialog(mainWindow, {
+					filters : [
+						{name: 'Json Files', extensions: ['json']},
+						{name: 'All Files', extensions: ['*']}
+					],
+					properties: ['openFile']}
+				);
+				send.ok(res, action, {folder : Array.isArray(folder) ? folder.shift() : ''});
+			}
+		},
+		{
+			type : reqTypes.post,
+			route: Routes.cloudSaveConfig,
+			handel: (res, action, data) => {
+				fs.copy(data.folder, getCloudByType(data).getConfigPath())
+					.then(() => send.ok(res, action))
+					.catch(err => send.err(res, action))
+			}
+		},
+
+		{
 			type : reqTypes.del,
-			route: Routes.dropBoxDownloadArchiveClear,
+			route: Routes.cloudDownloadArchiveClear,
 			handel: (res, action, dateStr) => {
 				let pathUpload = pathManager.getUploadPath(dateStr);
 
@@ -64,13 +118,13 @@ module.exports = {
 		},
 		{
 			type : reqTypes.post,
-			route: Routes.dropBoxDownloadArchiveMerge,
+			route: Routes.cloudDownloadArchiveMerge,
 			handel: (res, action, dateStr) => {
 
 				let pathUpload = pathManager.getUploadPath(dateStr);
 				let pathExtract = `${pathUpload}/unzip`;
 
-				migrateTingo.up(modelUsers, modelStorage, modelCategories, pathExtract)
+				migrateTingo.up(modelUsers, modelStorage, modelProjects, pathExtract)
 					.then(() => send.ok(res, action, dateStr))
 					.catch(err => {
 						console.log('!ERR merge archive', err);
@@ -81,7 +135,7 @@ module.exports = {
 		},
 		{
 			type : reqTypes.put,
-			route: Routes.dropBoxDownloadArchiveExtract,
+			route: Routes.cloudDownloadArchiveExtract,
 			handel: (res, action, dateStr) => {
 
 				let pathUpload = pathManager.getUploadPath(dateStr);
@@ -96,13 +150,13 @@ module.exports = {
 			}
 		},
 		{
-			route: Routes.dropBoxDownloadArchive,
-			handel: (res, action) => {
+			route: Routes.cloudDownloadArchive,
+			handel: (res, action, data) => {
 				let date = new Date();
 				let dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 				pathManager.checkDownloadFolder(dateStr)
-					.then(pathDowload => could.moveFromCould(pathDowload, pathManager.getArchiveName()))
+					.then(pathDowload => getCloudByType(data).moveFromCould(pathDowload, pathManager.getArchiveName()))
 					.then(r => send.ok(res, action, dateStr))
 					.catch(err => {
 						console.log('!ERR download archive', err);
@@ -111,7 +165,7 @@ module.exports = {
 			}
 		},
 		{
-			route: Routes.dropBoxUploadArchive,
+			route: Routes.cloudUploadArchive,
 			type : reqTypes.post,
 			handel: (res, action) => {
 				let date = new Date();
@@ -129,56 +183,18 @@ module.exports = {
 			}
 		},
 		{
-			route: Routes.dropBoxUpload,
+			route: Routes.cloudUpload,
 			type : reqTypes.put,
-			handel: (res, action, date) => {
-				const zipPath = pathManager.getNewArchivePath(date);
+			handel: (res, action, data) => {
+				const zipPath = pathManager.getNewArchivePath(data.date);
 				const fileName = pathManager.getArchiveName();
 
-				could.moveToCould(zipPath, fileName)
+				getCloudByType(data).moveToCould(zipPath, fileName)
 					.then(() => send.ok(res, action, null))
 					.catch(err => {
 						console.log('!ERR move to could', err);
 						send.err(res, action, 'ERR move to could');
 					});
-			}
-		},
-		{
-			route: Routes.dropBoxConInit,
-			handel: (res, action) => {
-				modelSettings.getSettingsDBox()
-					.then(could.connectInit)
-					.then(() => send.ok(res, action, null))
-					.catch(err => {
-						console.log('!ERR init dropBox connect', err);
-						send.err(res, action, 'Error get dropBox connect');
-					});
-			}
-		},
-		{
-			route  : Routes.dropBoxConLink,
-			handel : (res, action, data) => {
-				could.appInit(data.apiKey, data.apiSecret)
-					.getConfirmLink()
-					.then(requesttoken => modelSettings.setRequestToken(data, requesttoken))
-					.then(requesttoken => send.ok(res, action, requesttoken.authorize_url))
-					.catch(err => {
-						console.log('!ERR drop-box get confirm link ', err);
-						send.err(res, action, null);
-					})
-			}
-		},
-		{
-			route  : Routes.dropBoxAccess,
-			handel : (res, action) => {
-				modelSettings.getRequestToken()
-					.then(could.getAccessToken)
-					.then(modelSettings.setAccessToken)
-					.then(() => send.ok(res, action, null))
-					.catch(err => {
-						console.log('!ERR drop-box get access', err);
-						send.err(res, action, null);
-					})
 			}
 		}
 	]

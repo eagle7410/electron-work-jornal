@@ -1,7 +1,7 @@
 const assert = require('assert');
-const couldFactory = require('../libs/coulds/CouldFactory');
+const cloudFactory = require('../libs/clouds/CloudFactory');
 const pathManager = require('../libs/path-manager');
-const dropBox = couldFactory.getCould(couldFactory.types().dBox);
+const dropBox = cloudFactory.getCloud(cloudFactory.types().dBox);
 
 describe('Check DropBox', () => {
 	it('Check DropBox fail connect', function() {

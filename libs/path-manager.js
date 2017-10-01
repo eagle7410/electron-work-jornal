@@ -1,9 +1,10 @@
 const fs   = require('fs-extra');
 const path = require('path');
-const fileName    = 'data-task.zip';
+// TODO: Back
+const fileName    = 'data-task-test.zip';
 const pathArchive = path.join(__dirname, '..', 'archives');
 const pathUpload  = path.join(pathArchive, 'upload');
-const pathInitData = path.join(__dirname, 'coulds', 'init-data');
+const pathInitData = path.join(__dirname, 'clouds', 'init-data');
 const pathDropBoxData  = pathInitData;
 const pathGoogleData  = pathInitData;
 

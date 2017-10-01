@@ -59,7 +59,7 @@ module.exports = class CouldDropBox extends Interface {
 					return bad(err);
 				}
 
-				that.dboxClient.filesUpload({path: '/' + fileName, contents: content}).then(ok, bad);
+				that.dboxClient.filesUpload({path: '/' + fileName, contents: content,  mode: 'overwrite'}).then(ok, bad);
 			});
 		});
 	}

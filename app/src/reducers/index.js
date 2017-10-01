@@ -14,7 +14,9 @@ import {dataLoader} from './DataLoader'
 import {dropBoxSettingsForm} from './Settings/DropBoxSettingsForm'
 import {dropBoxStepsUpload} from './Settings/DropBoxStepsUpload'
 import {dropBoxStepsDownload} from './Settings/DropBoxStepsDownload'
-
+import {googleSettingsForm} from './Settings/GoogleSettingsForm'
+import {googleStepsUpload} from './Settings/GoogleStepsUpload'
+import {googleStepsDownload} from './Settings/GoogleStepsDownload'
 
 const reducer = combineReducers({
 	routing: routerReducer,
@@ -31,7 +33,10 @@ const reducer = combineReducers({
 	navMenu,
 	dropBoxSettingsForm,
 	dropBoxStepsUpload,
-	dropBoxStepsDownload
+	dropBoxStepsDownload,
+	googleSettingsForm,
+	googleStepsUpload,
+	googleStepsDownload
 });
 
 export {reducer};

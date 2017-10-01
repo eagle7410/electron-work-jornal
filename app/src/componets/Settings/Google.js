@@ -7,19 +7,19 @@ import {connect} from 'react-redux';
 import CouldConnect from './Cloud/CouldConnect'
 import StepsDownload from './Cloud/StepsDownload'
 import StepsUpload from './Cloud/StepsUpload'
-import {Alert, DropBoxConnect} from '../../const/Events'
+import {Alert, GoogleConnect} from '../../const/Events'
 import AlertStatus from '../../const/AlertStatus'
 
-const DropBox = (state) => {
-	const type = {type : 'dbox'};
+const Google = (state) => {
+	const type = {type : 'google'};
 
 	const InitConnect = () => {
 		initConnect(type)
 			.then(data => {
 				state.init();
-				state.showAlert('dropbox is init', AlertStatus.OK)
+				state.showAlert('Google drive is init', AlertStatus.OK)
 			})
-			.catch(err => state.showAlert('No init dropbox', AlertStatus.BAD));
+			.catch(err => state.showAlert('No init google drive', AlertStatus.BAD));
 	};
 
 	const loadConfig = () => {
@@ -34,11 +34,11 @@ const DropBox = (state) => {
 
 	return (
 		<Tabs >
-			<Tab label='Upload to DropBox' icon={<ActionUp />} >
+			<Tab label='Upload to Google' icon={<ActionUp />} >
 				<CouldConnect store={state.connect} init={InitConnect} load_config={loadConfig}/>
 				<StepsUpload  steps={state.stepsUpload} type={type} connect={state.connect}  />
 			</Tab>
-			<Tab label='Download from DropBox' icon={<ActionDown />} >
+			<Tab label='Download from Google' icon={<ActionDown />} >
 				<CouldConnect  store={state.connect} init={InitConnect} load_config={loadConfig}/>
 				<StepsDownload steps={state.stepsDownload} type={type} connect={state.connect}  />
 			</Tab>
@@ -49,9 +49,9 @@ const DropBox = (state) => {
 
 export default connect(
 	state => ({
-		connect : state.dropBoxSettingsForm,
-		stepsUpload : state.dropBoxStepsUpload,
-		stepsDownload : state.dropBoxStepsDownload,
+		connect : state.googleSettingsForm,
+		stepsUpload : state.googleStepsUpload,
+		stepsDownload : state.googleStepsDownload,
 	}),
 	dispatch => ({
 		showAlert   : (mess, type) => dispatch({
@@ -61,7 +61,7 @@ export default connect(
 				status: type
 			}
 		}),
-		isHaveConfig : () => dispatch({type : DropBoxConnect.isHaveConfig}),
-		init : () => dispatch({type : DropBoxConnect.init}),
+		isHaveConfig : () => dispatch({type : GoogleConnect.isHaveConfig}),
+		init : () => dispatch({type : GoogleConnect.init}),
 	})
-)(DropBox);
+)(Google);

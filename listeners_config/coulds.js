@@ -1,6 +1,4 @@
-// TODO: Back clear
 const fs           = require('fs-extra');
-const could        = require('../libs/drop-box');
 const send         = require('../libs/send');
 const zipper       = require('../libs/zipper');
 const pathManager  = require('../libs/path-manager');

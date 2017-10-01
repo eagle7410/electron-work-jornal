@@ -128,7 +128,7 @@ module.exports = class GoogleDrive extends Interface {
 	moveToCould(fileZip, fileName = pathManager.getArchiveName()) {
 		const that = this;
 
-		return new Promise((ok, bad) => {
+		function insert(ok, bad) {
 			fs.readFile(fileZip, (err, content) => {
 
 				if (err) {
@@ -150,6 +150,22 @@ module.exports = class GoogleDrive extends Interface {
 					ok(res);
 				});
 			});
+		}
+
+		return new Promise((ok, bad) => {
+
+			that.findFiles(fileName)
+				.then(files => {
+
+					insert((res) => {
+						that._service.delete({auth: that._auth, fileId: files[0].id}, () => ok(res));
+					}, bad)
+				})
+				.catch(err => {
+					insert(ok, bad);
+				})
+
+
 		});
 	}
 

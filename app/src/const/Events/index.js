@@ -1,8 +1,9 @@
 import StorageProjects from './StorageProjects';
 import StorageFilters  from './StorageFilters';
-import StepsDownload from './StepsDownload';
-import StepsConnect from './StepsConnect'
 import DropBoxConnect from './DropBoxConnect';
+import StepsDownload from './StepsDownload';
+import GoogleConnect from './GoogleConnect';
+import StepsConnect from './StepsConnect'
 import StepsUpload from './StepsUpload';
 import DataLoader from './DataLoader';
 import RecordAdd  from './RecordAdd';
@@ -17,6 +18,7 @@ export {
 	DropBoxConnect,
 	StorageProjects,
 	StorageFilters,
+	GoogleConnect,
 	StepsDownload,
 	StepsConnect,
 	StepsUpload,

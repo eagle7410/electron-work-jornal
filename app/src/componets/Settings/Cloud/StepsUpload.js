@@ -12,7 +12,7 @@ const styleBlock       = {width: '100%', maxWidth: 700, margin: 'auto'};
 const styleButtonBlock = {marginTop: 24, marginBottom: 12};
 
 const StepsUpload = (state) => {
-	const store    = state.store;
+	const store    = state.steps;
 	const connect  = state.connect ;
 	const typeData = state.type;
 	const finished  = store.finished;
@@ -62,10 +62,7 @@ const StepsUpload = (state) => {
 }
 
 export default connect(
-	state => ({
-		store: state.dropBoxStepsUpload,
-		connect : state.dropBoxSettingsForm
-	}),
+	state => ({}),
 	dispatch => ({
 		run       : (typeData) => dispatch({type : Events.run,    data: typeData.type}),
 		stop      : (typeData) => dispatch({type : Events.stop,   data: typeData.type}),

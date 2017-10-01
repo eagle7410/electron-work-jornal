@@ -12,7 +12,7 @@ import StepsSimpleContent from './StepsSimpleContent'
 
 
 const StepsDownload = (state) => {
-	const store    = state.store;
+	const store    = state.steps;
 	const typeData = state.type;
 	const connect  = state.connect ;
 	const finished  = store.finished;
@@ -84,10 +84,7 @@ const StepsDownload = (state) => {
 };
 
 export default connect(
-	state => ({
-		store: state.dropBoxStepsDownload,
-		connect : state.dropBoxSettingsForm
-	}),
+	state => ({}),
 	dispatch => ({
 		run       : (typeData) => dispatch({type : Events.run,   data: typeData.type}),
 		stop      : (typeData) => dispatch({type : Events.stop,  data: typeData.type}),

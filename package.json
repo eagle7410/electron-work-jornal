@@ -29,7 +29,6 @@
     "url": "https://github.com/eagle7410/electron-work-jornal/issues"
   },
   "devDependencies": {
-    "electron-devtools-installer": "^2.2.0",
     "electron-packager": "^8.7.2",
     "electron-prebuilt": "^1.4.13",
     "electron-prebuilt-compile": "^1.8.1",

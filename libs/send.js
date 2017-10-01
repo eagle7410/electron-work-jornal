@@ -15,7 +15,7 @@ const err = 'BAD';
 let send = (res, action, status, data = null) => {
 
 	res.send(action, {
-		status : status,
+		_status : status,
 		data : data
 	});
 };

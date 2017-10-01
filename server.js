@@ -33,7 +33,7 @@ const listeners = arConfig => {
 };
 
 // Models
-const modelConstant   = require('./modelConst');
+const modelConstant   = require('./constModels');
 const modelUsers      = models.get(db, modelConstant.usr);
 const modelSettings   = models.get(db, modelConstant.sett);
 const modelStorage    = models.get(db, modelConstant.store);

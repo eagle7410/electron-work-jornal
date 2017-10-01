@@ -3,6 +3,13 @@ const path = require('path');
 const fileName    = 'data-task.zip';
 const pathArchive = path.join(__dirname, '..', 'archives');
 const pathUpload  = path.join(pathArchive, 'upload');
+const pathInitData = path.join(__dirname, 'coulds', 'init-data');
+const pathDropBoxData  = pathInitData;
+const pathGoogleData  = pathInitData;
+
+const getPathDropBoxData = () => pathDropBoxData;
+const getPathToFile = (dir, fileName) => path.join(dir , fileName);
+const checkExistSync = path => fs.existsSync(path);
 
 /**
  * Return upload dir.
@@ -91,5 +98,9 @@ module.exports = {
 	deleteFolderRecursive : deleteFolderRecursive,
 	setDbFolder : (folder) => {
 		dbFolder = folder;
-	}
+	},
+	getPathDropBoxData : getPathDropBoxData,
+	getPathToFile : getPathToFile,
+	checkPath : checkPath,
+	checkExistSync : checkExistSync
 };

@@ -1,4 +1,4 @@
-const modelConst = require('../modelConst');
+const modelConst = require('../constModels');
 const Engine = require('tingodb')();
 
 /**

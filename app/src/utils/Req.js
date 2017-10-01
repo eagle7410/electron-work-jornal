@@ -88,7 +88,7 @@ const reqFull = (
 	headers = {}
 ) => new Promise(
 	(ok, bad) => {
-		success = success || ((r, ok, bad) => r.status === status.ok ? ok(r.data) : bad(r.data));
+		success = success || ((r, ok, bad) => r._status === status.ok ? ok(r.data) : bad(r.data));
 		fail = fail || ((e, bad) => bad(Alert.errorInner))
 
 		method(url, data, headers)

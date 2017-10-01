@@ -4,13 +4,13 @@ import {Auth} from '../const/Messages'
 
 const loginList = () => new Promise((ok, bad) =>
 	get(Routes.usrList)
-		.then(r => r.status === status.ok ? ok(r.data) : bad(), bad)
+		.then(r => r._status === status.ok ? ok(r.data) : bad(), bad)
 );
 
 const auth = (login, pass) => new Promise((ok, bad) =>
 	get(Routes.auth, {login: login, pass: pass})
 		.then(
-			r => r.status === status.ok ? ok(r.data) : bad(Auth.passBad),
+			r => r._status === status.ok ? ok(r.data) : bad(Auth.passBad),
 			e => bad(Auth.passBad)
 		)
 );

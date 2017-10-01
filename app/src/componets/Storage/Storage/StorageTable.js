@@ -8,16 +8,11 @@ import {Storage, StorageFilters} from '../../../const/Events'
 import EmptyRow from '../../tools/EmptyRow'
 import Paper from 'material-ui/Paper';
 
-
 const StorageTable = (state) => {
 	let store = state.store;
 	let filters = state.filters;
 	let pagination = state.pagination;
-	let rows = filters.rows;
-	let total = Math.ceil(rows.length / pagination.split);
-	let startIndex = (pagination.number - 1 ) * pagination.split;
-
-	rows = rows.slice(startIndex, startIndex + pagination.split);
+	let total = state.total;
 
 	return (
 		<Paper style={{zIndex : 1}}>
@@ -32,7 +27,7 @@ const StorageTable = (state) => {
 				{
 					total === 0
 						? <EmptyRow key='empty-row' col='2'/>
-						: rows.map((row, inx) =>
+						: state.rows.map((row, inx) =>
 						row.id === store.editRow
 							? <RowEdit key={`store_${row.id}`} />
 							: <RowShow key={`store_${row.id}`} row={row} />

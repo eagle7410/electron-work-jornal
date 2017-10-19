@@ -3,12 +3,12 @@ const ipcRenderer = electron.ipcMain;
 const dialog      = electron.dialog;
 
 // Db
-const dbFolder = 'db_test';
-const Engine   = require('tingodb')();
-const dbPath   = `${__dirname}/${dbFolder}/tingo_db/data`;
-const db       = new Engine.Db(dbPath, {});
-const Routes   = require('./routes/RoutesConstDev');
-const modelsFactory   = require('./db/tingo_db/models');
+const dbFolder      = 'db_test';
+const Engine        = require('tingodb')();
+const dbPath        = `${__dirname}/${dbFolder}/tingo_db/data`;
+const db            = new Engine.Db(dbPath, {});
+const Routes        = require('./routes/RoutesConstDev');
+const modelsFactory = require('./db/tingo_db/models');
 
 // Paths
 const pathManager   = require('./libs/path-manager');
@@ -22,14 +22,6 @@ const listenStorage    = require('./listeners_config/storage');
 const listenProjects   = require('./listeners_config/projects');
 const send             = require('./libs/send');
 
-// Models
-const modelConstant   = require('./constModels');
-const models = {
-	users    : modelsFactory.get(db, modelConstant.usr),
-	setting  : modelsFactory.get(db, modelConstant.sett),
-	store    : modelsFactory.get(db, modelConstant.store),
-	projects : modelsFactory.get(db, modelConstant.prj)
-};
 
 // Clouds
 const cloudFactory = require('./libs/clouds/CloudFactory');
@@ -52,13 +44,22 @@ const listeners = arConfig => {
 	}));
 };
 
+// Models
+const modelConstant   = require('./constModels');
+const models = {
+	users    : modelsFactory.get(db, modelConstant.usr),
+	setting  : modelsFactory.get(db, modelConstant.sett),
+	store    : modelsFactory.get(db, modelConstant.store),
+	projects : modelsFactory.get(db, modelConstant.prj)
+};
 
 module.exports = {
 	run: (mainWindow) => new Promise(ok => {
+
 		listeners([
 			listenCould.setDialog(dialog).setWindow(mainWindow).setModels(models).setClouds(clouds),
-			listenStorage.setModel(models.store),
 			listenAuth.setModels(models).setClouds(clouds),
+			listenStorage.setModel(models.store),
 			listenProjects.setModel(models.projects),
 			listenUsers.setModel(models.users)
 		]);

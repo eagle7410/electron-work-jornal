@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu          = electron.Menu;
 const server        = require('./server');
 
-app.on('ready', () => {
+app.on('ready',async () => {
 	const screenElectron = electron.screen;
 	const mainScreen = screenElectron.getPrimaryDisplay();
 	const dimensions = mainScreen.size;

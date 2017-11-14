@@ -2,7 +2,7 @@
   "name": "electron-work-jornal",
   "version": "1.0.0",
   "description": "Work journal.",
-  "main": "index-app.js",
+  "main": "index-app-dev.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron --js-flags='--harmony-async-await' .",

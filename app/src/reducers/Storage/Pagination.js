@@ -21,6 +21,7 @@ const storagePagination = (state = initialState, action) => {
 				split : action.data
 			};
 
+		case StorageFilters.chFilter:
 		case StorageFilters.chCat:
 		case StorageFilters.chText:
 			return {

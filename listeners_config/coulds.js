@@ -164,25 +164,33 @@ module.exports = {
 		},
 		{
 			route: Routes.cloudUploadArchive,
-			type : reqTypes.post,
-			handel: (res, action) => {
-				let date = new Date();
-				let dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+			type: reqTypes.post,
+			handel: async (res, action) => {
+				try {
+					let date = new Date();
+					let dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+					const zipPath = pathManager.getNewArchivePath(dateStr);
 
-				const zipPath  = pathManager.getNewArchivePath(dateStr);
+					const json = await  migrateTingo.dataJson(modelUsers, modelStorage, modelProjects);
 
-				pathManager.checkFolderNewArchive(dateStr)
-					.then(() => zipper.createArhive(pathManager.getPathDb(), zipPath))
-					.then(() => send.ok(res, action, dateStr))
-					.catch(err => {
-						console.log('!ERR create archive', err);
-						send.err(res, action, 'ERR create archive');
-					});
+					const jsonString = JSON.stringify(json);
+
+					await pathManager.checkFolderNewArchive(dateStr);
+
+					await zipper.createArchiveByContent(jsonString, 'data.json', zipPath);
+
+					send.ok(res, action, dateStr);
+
+				} catch (e) {
+					console.log('!ERR create archive', e);
+					send.err(res, action, 'ERR create archive');
+				}
 			}
 		},
+
 		{
 			route: Routes.cloudUpload,
-			type : reqTypes.put,
+			type: reqTypes.put,
 			handel: (res, action, data) => {
 				const zipPath = pathManager.getNewArchivePath(data.date);
 				const fileName = pathManager.getArchiveName();

@@ -65,3 +65,46 @@ module.exports.up = (modelUsers, modelStorage, modelCategories, pathExtract) => 
 		.then(() => ok())
 		.catch(e => bad(e));
 });
+
+/**
+ * Merge data.
+ * @param {string} jsonPath
+ * @param {{users : Collection, store: Collection, categories : Collection }} models
+ * @returns {Promise.<void>}
+ */
+module.exports.upFromJson = async (jsonPath, models) => {
+	const data = require(jsonPath);
+
+	await models.users.addMany(data.users);
+	await models.store.addMany(data.store);
+
+	let cat = [];
+
+	for (let id in data.categories) {
+		cat.push({
+			_id: id,
+			name : data.categories[id]
+		});
+	}
+
+	await models.categories.addMany(cat);
+};
+
+/**
+ *
+ * @param {Collection} modelUsers
+ * @param {Collection} modelStorage
+ * @param {Collection} modelProjects
+ * @returns {Promise.<{users: *, store: *, categories: *}>}
+ */
+module.exports.dataJson = async (modelUsers, modelStorage, modelProjects) => {
+	let users      = await modelUsers.list();
+	let store      = await modelStorage.list();
+	let projects = await modelProjects.list();
+
+	return {
+		users : users,
+		store : store,
+		projects : projects
+	}
+}

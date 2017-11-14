@@ -16,43 +16,42 @@ const StorageTable = (state) => {
 
 	return (
 		<Paper style={{zIndex : 1}}>
-		<Table fixedHeader={true} selectable={false}>
-			<TableHeader displaySelectAll={false}>
-				<TableRow >
-					<TableHeaderColumn >Actions, Main data</TableHeaderColumn>
-					<TableHeaderColumn >Comment</TableHeaderColumn>
-				</TableRow>
-			</TableHeader>
-			<TableBody displayRowCheckbox={false} showRowHover={true}>
+			<Table fixedHeader={true} selectable={false}>
+				<TableHeader displaySelectAll={false}>
+					<TableRow >
+						<TableHeaderColumn >Actions, Main data</TableHeaderColumn>
+						<TableHeaderColumn >Comment</TableHeaderColumn>
+					</TableRow>
+				</TableHeader>
+				<TableBody displayRowCheckbox={false} showRowHover={true}>
+					{
+						total === 0
+							? <EmptyRow key='empty-row' col='2'/>
+							: state.rows.map((row, inx) =>
+							row.id === store.editRow
+								? <RowEdit key={`store_${row.id}`} />
+								: <RowShow key={`store_${row.id}`} row={row} />
+						)
+					}
+				</TableBody>
 				{
-					total === 0
-						? <EmptyRow key='empty-row' col='2'/>
-						: state.rows.map((row, inx) =>
-						row.id === store.editRow
-							? <RowEdit key={`store_${row.id}`} />
-							: <RowShow key={`store_${row.id}`} row={row} />
-					)
+					total < 2
+						? <TableFooter/>
+						: <TableFooter>
+							<TableRow>
+								<TableRowColumn colSpan='2'>
+									now {pagination.number} from {total}
+									<Pagination
+										total = { total }
+										current = { pagination.number }
+										display = { pagination.display }
+										onChange = { number => state.onChangePage(number) }
+									/>
+								</TableRowColumn>
+							</TableRow>
+						</TableFooter>
 				}
-			</TableBody>
-			{
-				total < 2
-					? <TableFooter/>
-					: <TableFooter>
-						<TableRow>
-							<TableRowColumn colSpan='2'>
-								now {pagination.number} from {total}
-								<Pagination
-									total = { total }
-									current = { pagination.number }
-									display = { pagination.display }
-									onChange = { number => state.onChangePage(number) }
-								/>
-							</TableRowColumn>
-						</TableRow>
-					</TableFooter>
-			}
-
-		</Table>
+			</Table>
 		</Paper>
 	);
 };

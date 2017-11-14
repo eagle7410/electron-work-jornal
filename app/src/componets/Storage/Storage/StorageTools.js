@@ -19,10 +19,10 @@ class StoreTools extends Component {
 		val = Number(val);
 
 		if (isNaN(val) || val === 0) {
-			return;
+			val = '';
 		}
 
-		this.props.state.changeCountInPage(val);
+		this.props.changeCountInPage(val);
 	}
 
 	changeFilter(project, date, mode, projectAll) {
@@ -82,7 +82,7 @@ class StoreTools extends Component {
 							&nbsp;Count in page&nbsp;
 							<TextField style={stylePanagation} onChange={this.changeCountInPage.bind(this)}
 							           value={state.pagination.split} id='inputPagi'
-							           hintText='Enter count record in page'/>
+							           hintText='Enter'/>
 						</ToolbarGroup>
 					</Toolbar>
 				</Paper>

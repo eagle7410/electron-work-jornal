@@ -48,9 +48,10 @@ const Storages = (state) => {
 		return true;
 	});
 
-	let total = Math.ceil(rows.length / pagination.split);
+	let split = pagination.split || 1;
+	let total = Math.ceil(rows.length / split);
 
-	rows = rows.slice(startIndex, startIndex + pagination.split);
+	rows = rows.slice(startIndex, startIndex + split);
 
 
 	return (

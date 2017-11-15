@@ -26,12 +26,14 @@ const Storages = (state) => {
 
 		if (
 			mode !== FilterDateMode.noUse &&
-			(mode === FilterDateMode.useDate && date_doit !== date) ||
 			(
-				mode === FilterDateMode.useRange &&
+				(mode === FilterDateMode.useDate && date_doit !== date) ||
 				(
-					(from && date_doit < from) ||
-					(to && date_doit > to)
+					mode === FilterDateMode.useRange &&
+					(
+						(from && date_doit < from) ||
+						(to && date_doit > to)
+					)
 				)
 			)
 		) {

@@ -80,14 +80,14 @@ module.exports.upFromJson = async (jsonPath, models) => {
 
 	let cat = [];
 
-	for (let id in data.categories) {
+	for (let id in data.projects) {
 		cat.push({
 			_id: id,
-			name : data.categories[id]
+			name : data.projects[id]
 		});
 	}
 
-	await models.categories.addMany(cat);
+	await models.projects.addMany(cat);
 };
 
 /**
@@ -98,8 +98,8 @@ module.exports.upFromJson = async (jsonPath, models) => {
  * @returns {Promise.<{users: *, store: *, categories: *}>}
  */
 module.exports.dataJson = async (modelUsers, modelStorage, modelProjects) => {
-	let users      = await modelUsers.list();
-	let store      = await modelStorage.list();
+	let users    = await modelUsers.list();
+	let store    = await modelStorage.list();
 	let projects = await modelProjects.list();
 
 	return {

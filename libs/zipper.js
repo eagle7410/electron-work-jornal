@@ -1,6 +1,6 @@
 const zipFolder = require('zip-folder');
 const JSZip     = require('jszip');
-const unzip     = require('unzip');
+const unzip     = require('unzip2');
 const fs        = require('fs-extra');
 
 /**

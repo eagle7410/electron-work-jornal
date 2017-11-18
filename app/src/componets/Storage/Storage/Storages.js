@@ -6,14 +6,13 @@ import Paper from 'material-ui/Paper';
 import FilterDateMode from '../../../const/FilterDateMode'
 
 const Storages = (state) => {
-	let store = state.store;
-	let filters = state.filters;
+	let store      = state.store;
+	let filters    = state.filters;
 	let pagination = state.pagination;
 	let startIndex = (pagination.number - 1 ) * pagination.split;
 
-
 	let from = filters.dateFrom;
-	let to = filters.dateTo;
+	let to   = filters.dateTo;
 	let date = filters.filterDate;
 	let mode = filters.filterDateMode;
 	let	projectAll = filters.projectAll;
@@ -58,7 +57,9 @@ const Storages = (state) => {
 
 	return (
 		<div>
-			<Paper zDepth={2}><Tools hours={hours} hoursFact={hoursFact}/></Paper>
+			<Paper zDepth={2}>
+				<Tools hours={hours} hoursFact={hoursFact} rows={rows}/>
+			</Paper>
 			<Table rows={rows} total={total}/>
 		</div>
 	);

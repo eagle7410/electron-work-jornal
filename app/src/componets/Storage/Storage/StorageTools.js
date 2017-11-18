@@ -86,7 +86,11 @@ class StoreTools extends Component {
 						</ToolbarGroup>
 					</Toolbar>
 				</Paper>
-				<StorageToolsSettings onChange={this.changeFilter.bind(this)}/>
+				<StorageToolsSettings
+					hours={state.hours}
+					rows={state.rows}
+					onChange={this.changeFilter.bind(this)}
+				/>
 			</div>
 		);
 	}

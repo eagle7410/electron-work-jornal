@@ -10,7 +10,6 @@ import Paper from 'material-ui/Paper';
 
 const StorageTable = (state) => {
 	let store = state.store;
-	let filters = state.filters;
 	let pagination = state.pagination;
 	let total = state.total;
 
@@ -59,7 +58,6 @@ const StorageTable = (state) => {
 export default connect(
 	state => ({
 		store: state.storage,
-		filters : state.storageFilters,
 		pagination : state.storagePagination
 	}),
 	dispatch => ({

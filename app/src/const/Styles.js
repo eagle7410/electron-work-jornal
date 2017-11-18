@@ -56,12 +56,12 @@ const styleIcon = {
 };
 
 const styleIconEnable = {
-	... styleIcon,
+	...styleIcon,
 	color : ok
 };
 
 const styleIconDisable = {
-	... styleIcon,
+	...styleIcon,
 	color : bad
 };
 

@@ -1,0 +1,14 @@
+{
+  "name": "app",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Igor <verycooleagle@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/eagle7410/electron-work-jornal",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}

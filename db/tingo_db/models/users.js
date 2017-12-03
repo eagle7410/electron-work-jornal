@@ -78,7 +78,9 @@ module.exports.list = () => new Promise((ok, bad) => {
 			let objList = [];
 			list.map(user => {
 				let newUser = Object.assign({}, user);
-				newUser._id = Number(user._id);
+				let id = Number(user._id);
+				newUser._id = id;
+				newUser.id = id;
 				objList.push(newUser);
 			});
 

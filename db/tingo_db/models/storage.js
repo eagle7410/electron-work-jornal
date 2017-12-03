@@ -62,7 +62,9 @@ module.exports.save = data => new Promise((ok, bad) => {
 				}
 
 				let rec = Object.assign({}, data[0]);
-				rec._id = Number(rec._id);
+				let id = Number(rec._id);
+				rec._id = id;
+				rec.id = id;
 				ok(rec);
 			})
 		}, bad);

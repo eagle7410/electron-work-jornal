@@ -27,10 +27,10 @@ const StorageTable = (state) => {
 						total === 0
 							? <EmptyRow key='empty-row' col='2'/>
 							: state.rows.map((row, inx) =>
-							row.id === store.editRow
-								? <RowEdit key={`store_${row.id}`} />
-								: <RowShow key={`store_${row.id}`} row={row} />
-						)
+								row.id === store.editRow
+									? <RowEdit key={`store_${row.id}`}/>
+									: <RowShow key={`store_${row.id}`} row={row}/>
+							)
 					}
 				</TableBody>
 				{

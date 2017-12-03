@@ -52,15 +52,14 @@ const Storages = (state) => {
 	let split = pagination.split || 1;
 	let total = Math.ceil(rows.length / split);
 
-	rows = rows.slice(startIndex, startIndex + split);
-
+	let rowsInPage = rows.slice(startIndex, startIndex + split);
 
 	return (
 		<div>
 			<Paper zDepth={2}>
 				<Tools hours={hours} hoursFact={hoursFact} rows={rows}/>
 			</Paper>
-			<Table rows={rows} total={total}/>
+			<Table rows={rowsInPage} total={total}/>
 		</div>
 	);
 }

@@ -77,7 +77,7 @@ class StoreTools extends Component {
 
 							<ToolbarSeparator/>
 
-							hours: {state.hours}&nbsp;hoursFact: {state.hoursFact}
+							hours: {state.hours.toFixed(2)}&nbsp;hoursFact: {state.hoursFact}
 							<ToolbarSeparator/>
 							&nbsp;Count in page&nbsp;
 							<TextField style={stylePanagation} onChange={this.changeCountInPage.bind(this)}

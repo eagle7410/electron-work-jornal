@@ -20,7 +20,7 @@ const dataToCsv  = (data, fileName) => {
 	for (let day in data) {
 		let dataDay = data[day];
 		content += `Date doit ${day};;;\n`;
-		content += dataDay.tasks.map(task => `Task #${task.task};${task.project};Hours ${task.hours};"${task.comment.replace(/"/g,'\\"')}"\n`).join('');
+		content += dataDay.tasks.map(task => `Task #${task.task};${task.project};"${task.hours.replace('.', ',')}";"${task.comment.replace(/"/g,'\\"')}"\n`).join('');
 	}
 
 	download(content, fileName);
